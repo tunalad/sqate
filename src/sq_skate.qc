@@ -148,8 +148,11 @@ void() skate_fire =
 	//player must be onground and not standing
 	if (self.push_fast_time < time && self.flags & FL_ONGROUND && (self.velocity_x || self.velocity_y))
 	{
-                if (self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
+                float push_stamina_cost = cvar("sq_stamina_cost_push");
+
+                if (self.ammo_shells > push_stamina_cost && self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
                 {
+                        self.ammo_shells = self.ammo_shells - push_stamina_cost;
                         sound (self, CHAN_BODY, "player/skaterol.wav", 1, ATTN_NORM);
                         self.push_fast_time = time + 2;
                         self.walkframe = 20;
@@ -844,7 +847,9 @@ void() Regenerate_Stamina =
 {
 	if (self.stamina_regen_time < time)
 	{
-		self.ammo_shells = self.ammo_shells + 100;
+                if (cvar("sq_stamina") && !cvar("sq_stamina_recovery")) self.ammo_shells = self.ammo_shells + 2;
+                if (cvar("sq_stamina_recovery")) self.ammo_shells = self.ammo_shells + cvar("sq_stamina_recovery");
+                if (!cvar("sq_stamina")) self.ammo_shells = self.ammo_shells + 100; // this one can be removed tbf
 
 		if (self.ammo_shells > 100)
 			self.ammo_shells = 100;

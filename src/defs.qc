@@ -770,7 +770,6 @@ float GRIND_NORMAL = 1;			//looks like no animation
 float GRIND_BOARDSLIDE = 2;
 float GRIND_BACKBOARDSLIDE = 3;
 
-
 //Music
 float	current_track;
 
@@ -779,7 +778,3 @@ float	TEMP1_NOMUSIC 	= 1;		//I'm using temp1 to disable things ! yeah !
 //Competition status...
 float comp_started;
 float comp_timelimit;
-
-
-// cheats (tunalad)
-float SQATE_STRAFE = 1; // air strafing

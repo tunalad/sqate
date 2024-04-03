@@ -818,8 +818,12 @@ void() PlayerJump =
 	}
 	else
 	{
-		if (self.board_falling == FALSE)				//jumping costs health now !
+                float jump_stamina_cost = cvar("sq_stamina_cost_jump");
+                if(!cvar("sq_stamina_cost_jump")) jump_stamina_cost = 30;
+
+		if (self.ammo_shells > jump_stamina_cost && self.board_falling == FALSE)        //jumping costs health now !
 		{
+                    self.ammo_shells = self.ammo_shells - jump_stamina_cost;
                     sound (self, CHAN_BODY, "player/skatejmp.wav", 1, ATTN_NORM);
                     self.velocity_z = self.velocity_z + 270;					//Squirt- 370 : 270
                     self.jump_vel = self.velocity;	//save the initial jump velocity
