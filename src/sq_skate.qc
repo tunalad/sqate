@@ -226,7 +226,10 @@ void() skate_fall =
 {
         local float	rand_dmg;
 
-	rand_dmg = 0;						// you can still fail a trick and the proper animation will play, but you'll no longer take damage.
+        rand_dmg = 0;
+        if(cvar("sq_faildamage"))
+            rand_dmg = random() * 5 + 15;
+
 	T_Damage (self, world, world, rand_dmg);
 	sound (self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
 	self.deathtype = "falling";
