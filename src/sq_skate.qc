@@ -3,6 +3,9 @@ void() switch_skating =
 	if (self.skating)			//already skating
 	{
 		self.skating = FALSE;		//walk
+		if(self.cam_on)
+                    switch_cam();
+
 		setmodel (self, "progs/player.mdl");
 		modelindex_player = self.modelindex;
 
@@ -13,6 +16,9 @@ void() switch_skating =
 	}
 	else
 	{
+		if(!self.cam_on)
+                    switch_cam();
+
 		self.skating = TRUE;
 		setmodel (self, "progs/skater.mdl");
 		modelindex_player = self.modelindex;

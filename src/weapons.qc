@@ -1302,8 +1302,8 @@ void() ImpulseCommands =
 	if (self.impulse == 103)				//
 		comp_start();					//
 
-	//if (self.impulse == 105)				//
-	//	switch_skating();					//
+	if (self.impulse == 105)				//
+		switch_skating();				//
 
 	//trick impulses
 	if (self.impulse == 99)					//
