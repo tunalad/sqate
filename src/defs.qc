@@ -781,3 +781,5 @@ float comp_started;
 float comp_timelimit;
 
 
+// cheats (tunalad)
+float SQATE_STRAFE = 1; // air strafing
