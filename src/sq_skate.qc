@@ -677,11 +677,20 @@ void() skate_land =
 float() check_stairs =
 //-----
 {
+        // shallow waters are being seen as steps, which is why you get stuck in them on maps like e1m3
+        // water stuff is defined in minus values, check defs.qc
         local vector	spot;
         local vector	fake_angles;
 
 	fake_angles = self.angles;
 	fake_angles_x = -10;
+
+        if(cvar("sq_stairskip") && self.watertype)
+            return FALSE;
+
+        if(cvar("sq_waterskip") && self.watertype < -2)
+            return FALSE;
+
 
 	makevectors(fake_angles);
 
@@ -866,6 +875,7 @@ void() Regenerate_Stamina =
 void() water_die =
 //-------------------
 {
+        // works only in deeper waters
         local float m;
         local float sq_dmg;
 	makevectors(self.angles);
