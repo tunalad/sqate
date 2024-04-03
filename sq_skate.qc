@@ -42,7 +42,7 @@ void() push_off_anim =
 void() skate_walkframes =
 //-----------------------
 {
-local float		new_trick;
+        local float		new_trick;
 
 						//	 1-12 stand
 						//	13-19 jump
@@ -148,13 +148,13 @@ void() skate_fire =
 	//player must be onground and not standing
 	if (self.push_fast_time < time && self.flags & FL_ONGROUND && (self.velocity_x || self.velocity_y))
 	{
-	if (self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
-	{
-		sound (self, CHAN_BODY, "player/skaterol.wav", 1, ATTN_NORM);
-		self.push_fast_time = time + 2;
-		self.walkframe = 20;
-		self.attack_finished = time + 0.2;			//don't mess up, hehe (?)
-	}
+                if (self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
+                {
+                        sound (self, CHAN_BODY, "player/skaterol.wav", 1, ATTN_NORM);
+                        self.push_fast_time = time + 2;
+                        self.walkframe = 20;
+                        self.attack_finished = time + 0.2;			//don't mess up, hehe (?)
+                }
 	}
 
 	if (!(self.flags & FL_ONGROUND) && !(self.busting))	//player in air making stunt !!!
@@ -162,67 +162,45 @@ void() skate_fire =
 		sound (self, CHAN_VOICE, "player/plyrjmp8.wav", 1, ATTN_NORM);
 
 		//check key combinations first...
-		if(self.key_trick4 == TRUE && self.invincible_finished != 0)
+		if(self.key_trick4 == TRUE)
 		{
-			self.walkframe = 109;			//backside rotation
-			self.velocity_z = vlen(self.velocity_z) * 0 + 1300; // with pentagram, you get a hop
-		}
-		else if(self.key_trick4 == TRUE)
-		{
-			self.walkframe = 109;			//backside rotation
-		}
-		else if (self.key_trick1 == TRUE && self.invincible_finished != 0)
-		{
-			self.walkframe = 37;			//ollie grap
-			self.velocity_z = vlen(self.velocity_z) * 0 + 500; // with pentagram, you get a hop
+			self.walkframe = 109;               // Backside rotation
+                        if (self.invincible_finished != 0)  // pentagram jump
+                            self.velocity_z = 1300;
 		}
 		else if (self.key_trick1 == TRUE)
 		{
-			self.walkframe = 37;			//ollie grap
+			self.walkframe = 37;		    // Ollie grap
+                        if (self.invincible_finished != 0)  // pentagram jump
+                            self.velocity_z = 500;
 		}
-		else if(self.key_trick2 == TRUE && self.invincible_finished != 0)
-		{
-			self.walkframe = 44;			//front 180
-			self.velocity_z = vlen(self.velocity_z) * 0 + 600; // with pentagram, you get a hop
-		}
+
 		else if(self.key_trick2 == TRUE)
 		{
-			self.walkframe = 44;			//front 180
+			self.walkframe = 44;		    // Front 180
+                        if (self.invincible_finished != 0)  // pentagram jump
+                            self.velocity_z = 600;
 		}
+
 		else if(self.key_trick3 == TRUE && self.invincible_finished != 0)
 		{
-			self.walkframe = 51;			//360 flip
-			self.velocity_z = vlen(self.velocity_z) * 0 + 700; // with pentagram, you get a hop
-		}
-		else if(self.key_trick3 == TRUE)
-		{
-			self.walkframe = 51;			//360 flip
-		}
-		else if(self.invincible_finished != 0)
-		{
-			self.walkframe = 27;			//Kickflip
-			self.velocity_z = vlen(self.velocity_z) * 0 + 400; // with pentagram, you get a hop
+			self.walkframe = 51;                // 360 flip
+                        if (self.invincible_finished != 0)  // pentagram jump
+                            self.velocity_z = 700;
 		}
 		else
 		{
-			self.walkframe = 27;			//Kickflip
+			self.walkframe = 27; // Kickflip
 		}
 		self.busting = TRUE;
 	} 
-	// This is the worst code I have ever, ever, written. I know the whole point of half of my code is to
-	// keep with the scuffed nature of Squirt's original code, but this is a whole other low. I spent an
-	// absurd amount of time attempting to get this to work and when I tried optimizing it, that shit
-	// stopped working, which has convinced me that this particular block of code is cursed by the ghost
-	// of Squirt. Ignore the fact that he's alive, because I have no other explanation for this. This was
-	// all done for LITERALLY NOTHING because it only comes into play when you have one of the least common
-	// powerups in the game, in both multiplayer DM and singleplayer campaigns. It was, however, very funny!
 };
 
 //--------			//Checks if self is on a rail
 float() onrail =
 //--------			//only one side (right or left) has to be empty
 {
-local vector	spot;
+        local vector	spot;
 
 	makevectors(self.angles);
 
@@ -246,7 +224,7 @@ local vector	spot;
 void() skate_fall =
 //----------
 {
-local float	rand_dmg;
+        local float	rand_dmg;
 
 	rand_dmg = 0;						// you can still fail a trick and the proper animation will play, but you'll no longer take damage.
 	T_Damage (self, world, world, rand_dmg);
@@ -276,10 +254,10 @@ local float	rand_dmg;
 void() skate_land =
 //-----------------------
 {
-local float	trick_points;
-local string trick_name;
-local	string random_sentence;
-local float	fell;
+        local float	trick_points;
+        local string trick_name;
+        local	string random_sentence;
+        local float	fell;
 
 	fell = FALSE;
 
@@ -668,8 +646,8 @@ local float	fell;
 float() check_stairs =
 //-----
 {
-local vector	spot;
-local vector	fake_angles;
+        local vector	spot;
+        local vector	fake_angles;
 
 	fake_angles = self.angles;
 	fake_angles_x = -10;
@@ -696,10 +674,10 @@ local vector	fake_angles;
 void() adjust_x_angle =
 //---------------------
 {
-local vector	spot;
-local float		front_space;
-local float		back_space;
-local float		new_x;
+        local vector	spot;
+        local float	front_space;
+        local float	back_space;
+        local float	new_x;
 
 	makevectors(self.angles);
 
@@ -816,7 +794,7 @@ local vector 	new_vel;
 void() Regenerate_Health =
 //-----------------
 {
-local float		old_health;
+        local float     old_health;
 	if (self.health_regen_time < time)
 	{
 		old_health = self.health;
@@ -855,8 +833,8 @@ void() Regenerate_Stamina =
 void() water_die =
 //-------------------
 {
-local float m;
-local float sq_dmg;
+        local float m;
+        local float sq_dmg;
 	makevectors(self.angles);
 	m = pointcontents(self.origin + v_forward*16);
 
@@ -871,6 +849,6 @@ local float sq_dmg;
 			self.deathtype = "lava";
 		else if(m == CONTENT_SLIME)
 			self.deathtype = "slime";
-; //removed the functioned that insta killed you in liquids. You will still take damage from slime and lava, to be clear.
+//removed the functioned that insta killed you in liquids. You will still take damage from slime and lava, to be clear.
 	}
 };

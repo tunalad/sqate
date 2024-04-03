@@ -233,6 +233,7 @@ void() worldspawn =
 	precache_sound ("weapons/lhit.wav");		//lightning
 	precache_sound ("weapons/lstart.wav");		//lightning start
 	precache_sound ("items/damage3.wav");
+	precache_sound ("items/suit2.wav");
 
 	precache_sound ("misc/power.wav");			//lightning for boss
 
@@ -379,7 +380,7 @@ void() bodyque =
 
 void() InitBodyQue =
 {
-	local entity	e;
+	//local entity	e;
 	
 	bodyque_head = spawn();
 	bodyque_head.classname = "bodyque";
