@@ -250,14 +250,39 @@ void() skate_fall =
 	self.jump_flag = 0;
 };
 
+float() check_wrong_direction =
+{
+	local vector	vec;
+	local vector	spot;
+	local float		dot;
+	
+        if(!cvar("sq_sidedrop"))
+                return FALSE;
+
+	if (self.spawn_time + 1 > time)		//player just respawned, exit
+		return FALSE; 	
+
+	spot = self.origin + (self.velocity * 0.15); //a spot where player will be in a short time
+	makevectors (self.angles);
+	vec = normalize (spot - self.origin);
+	dot = vec * v_forward;
+	
+	if ( dot > -0.3)	//-0.1 : 0.3 the higher the number, the lower the degree spectrum
+	{
+		return FALSE;		//player looks in right direction
+	}
+	sprint(self, "You have to look in the direction you are moving !\n");
+	return TRUE;
+};
+
 //-----------------------
 void() skate_land =
 //-----------------------
 {
         local float	trick_points;
-        local string trick_name;
-        local	string random_sentence;
-        local float	fell;
+        local string    trick_name;
+        local string    random_sentence;
+        local float     fell;
 
 	fell = FALSE;
 
@@ -273,7 +298,7 @@ void() skate_land =
 		self.trick = 0;			//no good landing no trick points !
 		fell = TRUE;
 	}
-	else if (self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0)
+	else if (check_wrong_direction() || self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0)
 	{
 		self.trick = 0;			//no good landing no trick points !
 		fell = TRUE;
