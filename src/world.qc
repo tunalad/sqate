@@ -155,8 +155,6 @@ void() main =
 };
 
 
-void() create_music;						//Squirt - prototype
-
 entity	lastspawn;
 
 //=======================
@@ -177,8 +175,6 @@ void() worldspawn =
 	InitBodyQue ();
 
 	clientInitMaxClients();					//Squirt - scoreboard
-
-	create_music();						//Squirt - music !
 
 // custom map attributes
 	if (self.model == "maps/e1m8.bsp")
@@ -213,8 +209,6 @@ void() worldspawn =
 	precache_sound ("player/skategnd.wav");		// skateboard grind sound
 	precache_model ("progs/skater.mdl");		// skater model
 	precache_model ("progs/invisiboard.mdl");	// just the board model - Fluffacorn
-	precache_sound ("track1.wav");          		// new music !
-	precache_sound ("track2.wav");          		// new music !
 	precache_sound ("player/yeah1.wav");          		// yeah sound after trick
 	precache_sound ("player/yeah2.wav");          		// ...
 

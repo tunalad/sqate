@@ -24,7 +24,6 @@ bot_main.qc
 
 sq_cam.qc
 sq_skate.qc
-sq_music.qc
 sq_comp.qc
 
 ogre.qc

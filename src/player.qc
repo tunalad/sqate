@@ -554,7 +554,7 @@ void() GibPlayer =
 
 void() PlayerDie =
 {
-	//local	float	i;
+	local	float	i;
 	
 	self.items = self.items - (self.items & IT_INVISIBILITY);
 	self.invisible_finished = 0;	// don't die as eyes
@@ -575,13 +575,17 @@ void() PlayerDie =
 	if (self.velocity_z < 10)
 		self.velocity_z = self.velocity_z + random()*300;
 
-	//if (self.health < -40)			//Squirt outcommented
-	//{
-		GibPlayer ();
-		return;
-	//}
+        // always gib because it's cool imo xd
+        GibPlayer ();
+        return;
 
         /*
+	if (self.health < -40)			//Squirt outcommented
+	{
+	      GibPlayer ();
+	      return;
+	}
+
 	DeathSound();
 	
 	self.angles_x = 0;
@@ -608,7 +612,6 @@ void() PlayerDie =
 	else
 		player_diee1();
         */
-
 };
 
 void() set_suicide_frame =
