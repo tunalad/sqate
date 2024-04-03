@@ -698,13 +698,23 @@ float() check_stairs =
 	spot = self.origin - '0 0 16' + (v_forward * 26) + (v_right * 16);
 	traceline (self.origin, spot, TRUE, self);
 	if (trace_fraction != 1.0 || pointcontents(trace_endpos) != CONTENT_EMPTY)
-		return(TRUE);	//stairs infront of player !
+        {
+                // ignores doors
+                if (trace_ent && trace_ent.classname == "door")
+                    return FALSE;
+                return(TRUE);	//stairs infront of player !
+        }
 
 	//check infront left of the feet
 	spot = self.origin - '0 0 16' + (v_forward * 26) - (v_right * 16);
 	traceline (self.origin, spot, TRUE, self);
 	if (trace_fraction != 1.0 || pointcontents(trace_endpos) != CONTENT_EMPTY)
-		return(TRUE);	//stairs infront of player !
+        {
+                // ignores doors
+                if (trace_ent && trace_ent.classname == "door")
+                    return FALSE;
+                return(TRUE);	//stairs infront of player !
+        }
 
 
 	return(FALSE);		//flat ground
