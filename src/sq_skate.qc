@@ -725,7 +725,7 @@ void() adjust_x_angle =
 void() skate_drive =
 //-------------------------
 {
-local vector 	new_vel;
+        local vector 	new_vel;
 
 	if (self.flags & FL_ONGROUND)			//don't drive in air
 	{
@@ -863,9 +863,9 @@ void() water_die =
 	makevectors(self.angles);
 	m = pointcontents(self.origin + v_forward*16);
 
-	if (m == CONTENT_WATER || m == CONTENT_SLIME || m == CONTENT_LAVA)
+	if (cvar("sq_waterkill") && (m == CONTENT_WATER || m == CONTENT_SLIME || m == CONTENT_LAVA))
 	{
-		sq_dmg = self.health - 100;
+		sq_dmg = self.health + 10;
 		self.watertype = 0;		//not those drown messages
 		self.trick = 0;			//no good landing no trick points !
 		if (m == CONTENT_WATER)
@@ -874,6 +874,7 @@ void() water_die =
 			self.deathtype = "lava";
 		else if(m == CONTENT_SLIME)
 			self.deathtype = "slime";
-//removed the functioned that insta killed you in liquids. You will still take damage from slime and lava, to be clear.
+
+		T_Damage (self, world, world, sq_dmg); //always die in water
 	}
 };
