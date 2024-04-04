@@ -1,5 +1,11 @@
 void() switch_skating =
 {
+        if (!cvar("sq_walking"))
+        {
+                bprint("Walking mode now allowed, use sq_walking 1 to enable it.\n");
+                return;
+        }
+
 	if (self.skating)			//already skating
 	{
 		self.skating = FALSE;		//walk
