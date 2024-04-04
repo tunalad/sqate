@@ -26,19 +26,19 @@ sq_cam.qc
 sq_skate.qc
 sq_comp.qc
 
-ogre.qc
-demon.qc
-shambler.qc
-knight.qc
-soldier.qc
-wizard.qc
-dog.qc
-zombie.qc
-boss.qc
+monsters/ogre.qc
+monsters/demon.qc
+monsters/shambler.qc
+monsters/knight.qc
+monsters/soldier.qc
+monsters/wizard.qc
+monsters/dog.qc
+monsters/zombie.qc
+monsters/boss.qc
 
-tarbaby.qc		// registered
-hknight.qc		// registered
-fish.qc			// registered
-shalrath.qc		// registered
-enforcer.qc		// registered
-oldone.qc		// registered
+monsters/tarbaby.qc		// registered
+monsters/hknight.qc		// registered
+monsters/fish.qc			// registered
+monsters/shalrath.qc		// registered
+monsters/enforcer.qc		// registered
+monsters/oldone.qc		// registered
