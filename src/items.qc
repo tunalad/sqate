@@ -53,7 +53,8 @@ void() PlaceItem =
 		return;
 	}
 
-	// remove(self);				Squirt - no items !! >:-) | Fluff - YES ITEMS WHAT WAS COOKING HERE 
+        if(!cvar("sq_runes"))
+	    remove(self);
 };
 
 /*
