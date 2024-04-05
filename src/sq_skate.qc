@@ -189,7 +189,7 @@ void() skate_fire =
                             self.velocity_z = 600;
 		}
 
-		else if(self.key_trick3 == TRUE && self.invincible_finished != 0)
+		else if(self.key_trick3 == TRUE)
 		{
 			self.walkframe = 51;                // 360 flip
                         if (self.invincible_finished != 0)  // pentagram jump
