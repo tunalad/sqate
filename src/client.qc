@@ -1,6 +1,4 @@
 
-void() create_wpc;					//Squirt
-void() create_skill_changer;				//
 void() skate_land;					//
 void() skate_drive;					//
 void() Regenerate_Health;				//Squirt
@@ -1188,7 +1186,7 @@ void() PlayerPostThink =
 {
 	//local	float	mspeed, aspeed;
 	//local	float	r;
-	local entity a_wp;					//
+	//local entity a_wp;					//
 
 	if (self.view_ofs == '0 0 0')
 		return;		// intermission or finale
@@ -1241,22 +1239,22 @@ void() PlayerPostThink =
 	}
 
 
-	if (time < 10)								//Squirt
-	{
-		if (time < 5)
-			centerprint(self, " ");
-		if (time >= 5 && time < 7)
-			centerprint(self, " "); 			//
+	//if (time < 10)								//Squirt
+	//{
+	//	if (time < 5)
+	//		centerprint(self, " ");
+	//	if (time >= 5 && time < 7)
+	//		centerprint(self, " "); 			//
 
-		a_wp = find(world, classname, "waypoint_creator");
-		if (!a_wp)
-			create_wpc();
+	//	a_wp = find(world, classname, "waypoint_creator");
+	//	if (!a_wp)
+	//		create_wpc();
 
-		a_wp = find(world, classname, "skill_changer");
-		if (!a_wp)
-			create_skill_changer();
+	//	a_wp = find(world, classname, "skill_changer");
+	//	if (!a_wp)
+	//		create_skill_changer();
 
-	}
+	//}
 
 };
 
@@ -1270,22 +1268,6 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
-	local entity bot;					//Squirt
-	self.fClientNo = self.colormap - 1;
-	if( clientIsActive( self.fClientNo ) )
-		botInvalidClientNo( self.fClientNo );
-	clientSetUsed( self.fClientNo );
-	bot = find( world, classname, "bot" );
-	while( bot )
-	{
-		msgUpdateNameToPlayer( self, bot.fClientNo, bot.netname );
-		msgUpdateColorsToPlayer( self, bot.fClientNo, bot.fShirt, bot.fPants );
-		msgUpdateFragsToPlayer( self, bot.fClientNo, bot.frags );
-		bot = find( bot, classname, "bot" );
-	}
-
-
-
 	bprint (self.netname);
 	bprint (" entered the game\n");
 
@@ -1304,8 +1286,7 @@ called when a player disconnects from a server
 */
 void() ClientDisconnect =
 {
-	if (gameover)
-		return;
+	if (gameover) return;
 	// if the level end trigger has been activated, just return
 	// since they aren't *really* leaving
 
@@ -1332,7 +1313,7 @@ void(entity targ, entity attacker) ClientObituary =
 	rnum = random();
 
 
-	if (targ.classname == "player"|| targ.classname == "bot")
+	if (targ.classname == "player")
 	{
 		if (attacker.classname == "teledeath")
 		{
@@ -1342,7 +1323,6 @@ void(entity targ, entity attacker) ClientObituary =
 			bprint ("\n");
 
 			attacker.owner.frags = attacker.owner.frags + 1;
-			msgUpdateFragsToAll (attacker.owner.fClientNo, attacker.owner.frags);
 			return;
 		}
 
@@ -1353,17 +1333,15 @@ void(entity targ, entity attacker) ClientObituary =
 			bprint ("'s telefrag\n");
 
 			targ.frags = targ.frags - 1;
-			msgUpdateFragsToAll (targ.fClientNo, targ.frags);
 			return;
 		}
 
-		if (attacker.classname == "player"|| attacker.classname == "bot")
+		if (attacker.classname == "player")
 		{
 			if (targ == attacker)
 			{
 				// killed self
 				attacker.frags = attacker.frags - 1;
-				msgUpdateFragsToAll (attacker.fClientNo, attacker.frags);
 				bprint (targ.netname);
 
 				if (targ.weapon == 64 && targ.waterlevel > 1)
@@ -1382,12 +1360,6 @@ void(entity targ, entity attacker) ClientObituary =
 			else
 			{
 				attacker.frags = attacker.frags + 1;
-
-				msgUpdateFragsToAll (attacker.fClientNo, attacker.frags);
-				attacker.talk_subject = 4;				//killed enemy
-				attacker.talk_name = targ.netname;			//Squirt - talking
-				targ.talk_name = attacker.netname;			//
-
 
 				rnum = attacker.weapon;
 				if (rnum == IT_AXE)
@@ -1444,28 +1416,15 @@ void(entity targ, entity attacker) ClientObituary =
 						deathstring2 = "'s shaft\n";
 				}
 				bprint (targ.netname);
-				if (targ.classname == "bot")			//Squirt - print skill of bot
-				{
-					bprint(" (skill ");
-					bprint(ftos(targ.bot_skill));
-					bprint(") ");
-				}
 				bprint (deathstring);
 				bprint (attacker.netname);
-				if (attacker.classname == "bot")			//Squirt - print skill of bot
-				{
-					bprint(" (skill ");
-					bprint(ftos(attacker.bot_skill));
-					bprint(") ");
-				}
 				bprint (deathstring2);
 			}
 			return;
 		}
 		else
 		{
-			targ.frags = targ.frags - 1;		// killed self
-			msgUpdateFragsToAll (targ.fClientNo, targ.frags);
+			targ.frags = targ.frags - 1; // killed self
 			rnum = targ.watertype;
 
 			bprint (targ.netname);
@@ -1551,7 +1510,7 @@ void(entity targ, entity attacker) ClientObituary =
 				targ.deathtype = "";				//
 				if (random() < 0.8)				//
 					bprint (" is a poser\n");		//Squirt
-				else							//
+				else						//
 					bprint (" broke his neck\n");		//
 				return;
 			}
@@ -1560,8 +1519,8 @@ void(entity targ, entity attacker) ClientObituary =
 				targ.deathtype = "";				//
 				if (random() < 0.5)				//
 					bprint (" tried to skate in water\n");	//Squirt
-				else							//
-					bprint (" fell into water\n");	//
+				else						//
+					bprint (" fell into water\n");	        //
 				return;
 			}
 			if (targ.deathtype == "lava")
@@ -1569,7 +1528,7 @@ void(entity targ, entity attacker) ClientObituary =
 				targ.deathtype = "";				//
 				if (random() < 0.5)				//
 					bprint (" tried to skate in lava\n");	//Squirt
-				else							//
+				else						//
 					bprint (" fell into lava\n");		//
 				return;
 			}
@@ -1578,8 +1537,8 @@ void(entity targ, entity attacker) ClientObituary =
 				targ.deathtype = "";				//
 				if (random() < 0.5)				//
 					bprint (" tried to skate in slime\n");	//Squirt
-				else							//
-					bprint (" fell into slime\n");	//
+				else						//
+					bprint (" fell into slime\n");	        //
 				return;
 			}
 

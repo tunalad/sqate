@@ -1,3 +1,18 @@
+//void() switch_skating;
+//void() push_off_anim;
+//void() skate_walkframes;
+//void() skate_fire;
+//float() onrail;
+//void() skate_fall;
+//float() check_wrong_direction;
+//void() skate_land;
+//float() check_stairs;
+//void() adjust_x_angle;
+//void() skate_drive;
+//void() Regenerate_Health;
+//void() Regenerate_Stamina;
+void() water_die;
+
 void() switch_skating =
 {
         if (!cvar("sq_walking"))
@@ -596,7 +611,6 @@ void() skate_land =
 
 
 		self.frags = self.frags + trick_points;
-		msgUpdateFragsToAll (self.fClientNo, self.frags);
 
 		self.trick = 0;			//reset
 		self.second_trick = 0;		//

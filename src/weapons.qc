@@ -6,10 +6,6 @@ void(entity bomb, entity attacker, float rad, entity ignore) T_RadiusDamage;
 void(vector org, vector vel, float damage) SpawnBlood;
 void() SuperDamageSound;
 
-void(float teem) create_bot;				//
-void() command_follow;					//
-void() command_roam;					//
-void() switch_change_skill;				//
 void() switch_cam;						//Squirt
 void() switch_skating;						//
 void() skate_fire;						//player pressed fire
@@ -1291,11 +1287,9 @@ void() ImpulseCommands =
 		CycleWeaponReverseCommand ();
 
 
-	if (self.impulse == 100)				//
-		create_bot(1);
-	if (self.impulse == 201)
-		print_help();
-
+        
+	if (self.impulse == 201)                                //Squirt
+		print_help();                                   //
 
 	if (self.impulse == 104)				//Squirt
 		switch_cam();					//
@@ -1305,7 +1299,7 @@ void() ImpulseCommands =
 	if (self.impulse == 105)				//
 		switch_skating();				//
 
-	//trick impulses
+	// trick impulses
 	if (self.impulse == 99)					//
 		self.key_trick1 = TRUE;				//
 	if (self.impulse == 98)					//
@@ -1324,6 +1318,7 @@ void() ImpulseCommands =
 		self.key_trick4 = FALSE;			//
 
 
+        // cheats
 	if (self.impulse == 255)
 		QuadCheat ();
 	if (self.impulse == 254)

@@ -174,8 +174,6 @@ void() worldspawn =
 	lastspawn = world;
 	InitBodyQue ();
 
-	clientInitMaxClients();					//Squirt - scoreboard
-
 // custom map attributes
 	if (self.model == "maps/e1m8.bsp")
 		cvar_set ("sv_gravity", "100");
