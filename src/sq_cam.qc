@@ -2,10 +2,10 @@
 void() cam_think =
 // ------------------------
 {
-local vector	view_org;
-//local vector	start;
-local vector	calc_dir;
-local float		limited_angle;
+        local vector view_org;
+        //local vector start;
+        local vector calc_dir;
+        local float limited_angle;
 
 
 	if (self.owner.cam_on == FALSE)
