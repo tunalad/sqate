@@ -1188,13 +1188,21 @@ void() PlayerPostThink =
 	//local	float	r;
 	//local entity a_wp;					//
 
-	if (self.view_ofs == '0 0 0')
-		return;		// intermission or finale
-	if (self.deadflag)
+        // intermission or finale
+	if (self.view_ofs == '0 0 0' || self.deadflag)
 		return;
 
-// do weapon stuff
 
+        // per player model handling
+        if (self.skating)
+                setmodel(self, "progs/skater.mdl");
+        else
+                setmodel(self, "progs/player.mdl");
+        modelindex_player = self.modelindex;
+        setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
+
+
+// do weapon stuff
 	W_WeaponFrame ();
 
 
@@ -1237,25 +1245,6 @@ void() PlayerPostThink =
 		self.angles = self.mangle;		//Squirt fixangle code
 		self.push_fast_time = 0;				//don't move !
 	}
-
-
-	//if (time < 10)								//Squirt
-	//{
-	//	if (time < 5)
-	//		centerprint(self, " ");
-	//	if (time >= 5 && time < 7)
-	//		centerprint(self, " "); 			//
-
-	//	a_wp = find(world, classname, "waypoint_creator");
-	//	if (!a_wp)
-	//		create_wpc();
-
-	//	a_wp = find(world, classname, "skill_changer");
-	//	if (!a_wp)
-	//		create_skill_changer();
-
-	//}
-
 };
 
 

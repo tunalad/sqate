@@ -1,16 +1,3 @@
-//void() switch_skating;
-//void() push_off_anim;
-//void() skate_walkframes;
-//void() skate_fire;
-//float() onrail;
-//void() skate_fall;
-//float() check_wrong_direction;
-//void() skate_land;
-//float() check_stairs;
-//void() adjust_x_angle;
-//void() skate_drive;
-//void() Regenerate_Health;
-//void() Regenerate_Stamina;
 void() water_die;
 
 void() switch_skating =
@@ -24,27 +11,17 @@ void() switch_skating =
 	if (self.skating)			//already skating
 	{
 		self.skating = FALSE;		//walk
-		if(self.cam_on)
-                    switch_cam();
 
-		setmodel (self, "progs/player.mdl");
-		modelindex_player = self.modelindex;
-
-		setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
+		if(self.cam_on) switch_cam();
 
 		W_SetCurrentAmmo();
 		sprint(self,"now walking\n");
 	}
 	else
 	{
-		if(!self.cam_on)
-                    switch_cam();
-
 		self.skating = TRUE;
-		setmodel (self, "progs/skater.mdl");
-		modelindex_player = self.modelindex;
 
-		setsize (self, VEC_HULL_MIN, VEC_HULL_MAX);
+		if(!self.cam_on) switch_cam();
 
 		W_SetCurrentAmmo();
 		sprint(self, "now skating\n");

@@ -719,7 +719,6 @@ float(entity targ, entity inflictor) CanDamage;
 
 
 //----------------Skating
-
 .float	skating;			//using skateboard
 .float	push_time;			//time of last push-off
 .float	push_fast_time;		//push-off manually and hard
