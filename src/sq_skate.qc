@@ -8,9 +8,10 @@ void() switch_skating =
                 return;
         }
 
-	if (self.skating)			//already skating
-	{
-		self.skating = FALSE;		//walk
+	if (self.skating) // check if skating already
+	{ // walk
+		self.skating = FALSE;
+                self.board_falling = FALSE;
 
 		if(self.cam_on) switch_cam();
 
@@ -18,7 +19,7 @@ void() switch_skating =
 		sprint(self,"now walking\n");
 	}
 	else
-	{
+	{ // skate
 		self.skating = TRUE;
 
 		if(!self.cam_on) switch_cam();
@@ -235,7 +236,7 @@ void() skate_fall =
 
         rand_dmg = 0;
         if(cvar("sq_faildamage"))
-            rand_dmg = random() * 5 + 15;
+                rand_dmg = random() * 5 + 15;
 
 	T_Damage (self, world, world, rand_dmg);
 	sound (self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
