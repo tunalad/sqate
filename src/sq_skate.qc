@@ -8,7 +8,7 @@ void() switch_skating =
                 return;
         }
 
-	if (self.skating) // check if skating already
+	if (self.skating && self.board_falling == FALSE) // check if skating already
 	{ // walk
 		self.skating = FALSE;
                 self.board_falling = FALSE;
