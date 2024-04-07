@@ -57,8 +57,8 @@ void() SetChangeParms =
 	parm1 = self.items;
 	parm2 = self.health;
 	parm3 = self.armorvalue;
-	if (self.ammo_shells < 100)					//Squirt - stamina
-		parm4 = 100;
+	if (self.ammo_shells < 25)					//Squirt - stamina
+		parm4 = 25;
 	else
 		parm4 = self.ammo_shells;
 	parm5 = self.ammo_nails;
@@ -73,12 +73,14 @@ void() SetNewParms =
 	parm1 = IT_SHOTGUN | IT_AXE;
 	parm2 = 100;
 	parm3 = 0;
-	parm4 = 100;				//Squirt - start with 100 stamina
+	parm4 = 25;			
 	parm5 = 0;
 	parm6 = 0;
 	parm7 = 0;
 	parm8 = 1;
 	parm9 = 0;
+
+	if (cvar("sq_stamina")) parm4 = 100; // Squirt - start with 100 stamina
 };
 
 void() DecodeLevelParms =
@@ -817,9 +819,11 @@ void() PlayerJump =
 	else
 	{
                 float jump_stamina_cost = cvar("sq_stamina_cost_jump");
-                if(!cvar("sq_stamina_cost_jump")) jump_stamina_cost = 30;
 
-		if (self.ammo_shells > jump_stamina_cost && self.board_falling == FALSE)        //jumping costs health now !
+                if(!cvar("sq_stamina"))
+                        jump_stamina_cost = 0;
+
+		if (self.ammo_shells >= jump_stamina_cost && self.board_falling == FALSE)        //jumping costs health now !
 		{
                     self.ammo_shells = self.ammo_shells - jump_stamina_cost;
                     sound (self, CHAN_BODY, "player/skatejmp.wav", 1, ATTN_NORM);
@@ -1238,7 +1242,7 @@ void() PlayerPostThink =
 	CheckPowerups ();
 
 	Regenerate_Health();							//Squirt
-	Regenerate_Stamina();							//Squirt
+	if (cvar("sq_stamina")) Regenerate_Stamina();				//Squirt
 	comp_check_time();							//
 	if (self.board_falling == TRUE && self.pausetime > time)
 	{

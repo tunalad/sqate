@@ -50,20 +50,20 @@ void() push_off_anim =
 void() skate_walkframes =
 //-----------------------
 {
-        local float		new_trick;
+        local float new_trick;
 
-						//	 1-12 stand
-						//	13-19 jump
-						//	20-26 push
-						//	27-32 kickflip
-						//	33-36 grind
-						//	37-43 olliegrap
-						//	44-50 frontside 180
-						//	51-61 360 flip
-						//	62-97 fall
-						//	98-104 damage
-						//	105-108 backside boardslide
-						//	109-119 backside 360 rotation
+        //  1-12 stand
+        // 13-19 jump
+        // 20-26 push
+        // 27-32 kickflip
+        // 33-36 grind
+        // 37-43 olliegrap
+        // 44-50 frontside 180
+        // 51-61 360 flip
+        // 62-97 fall
+        // 98-104 damage
+        // 105-108 backside boardslide
+        // 109-119 backside 360 rotation
 
 	if (self.walkframe == 12 || self.walkframe == 19)
 	{
@@ -158,7 +158,10 @@ void() skate_fire =
 	{
                 float push_stamina_cost = cvar("sq_stamina_cost_push");
 
-                if (self.ammo_shells > push_stamina_cost && self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
+                if(!cvar("sq_stamina"))
+                        push_stamina_cost = 0;
+
+                if (self.ammo_shells >= push_stamina_cost && self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
                 {
                         self.ammo_shells = self.ammo_shells - push_stamina_cost;
                         sound (self, CHAN_BODY, "player/skaterol.wav", 1, ATTN_NORM);
@@ -873,9 +876,8 @@ void() Regenerate_Stamina =
 {
 	if (self.stamina_regen_time < time)
 	{
-                if (cvar("sq_stamina") && !cvar("sq_stamina_recovery")) self.ammo_shells = self.ammo_shells + 2;
-                if (cvar("sq_stamina_recovery")) self.ammo_shells = self.ammo_shells + cvar("sq_stamina_recovery");
-                if (!cvar("sq_stamina")) self.ammo_shells = self.ammo_shells + 100; // this one can be removed tbf
+                if (cvar("sq_stamina_recovery")) 
+                        self.ammo_shells = self.ammo_shells + cvar("sq_stamina_recovery");
 
 		if (self.ammo_shells > 100)
 			self.ammo_shells = 100;
