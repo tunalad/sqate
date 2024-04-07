@@ -12,6 +12,9 @@ void() switch_skating =
 	{ // walk
 		self.skating = FALSE;
                 self.board_falling = FALSE;
+                self.busting = FALSE;
+                self.diff_grinds = 0;
+                self.trick = 0;
 
 		if(self.cam_on) switch_cam();
 
