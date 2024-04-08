@@ -227,6 +227,7 @@ void() worldspawn =
 	precache_sound ("items/damage2.wav");
 	precache_sound ("items/damage3.wav");
 	precache_sound ("items/suit2.wav");
+	precache_sound ("items/inv3.wav");
 
 	precache_sound ("misc/power.wav");			//lightning for boss
 

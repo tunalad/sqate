@@ -4,7 +4,7 @@ void() switch_skating =
 {
         if (!cvar("sq_walking"))
         {
-                bprint("Walking mode now allowed, use sq_walking 1 to enable it.\n");
+                bprint("Walking mode not allowed, use sq_walking 1 to enable it.\n");
                 return;
         }
 
@@ -31,8 +31,6 @@ void() switch_skating =
 		sprint(self, "now skating\n");
 	}
 };
-
-
 
 //----------------------
 void() push_off_anim =
@@ -66,58 +64,47 @@ void() skate_walkframes =
         // 109-119 backside 360 rotation
 
 	if (self.walkframe == 12 || self.walkframe == 19)
-	{
 		self.walkframe = 0;
-	}
 	if(self.walkframe == 26 || self.walkframe == 32)
-	{
 		self.walkframe = 0;
-	}
 	if(self.walkframe == 43 || self.walkframe == 50)
-	{
 		self.walkframe = 0;
-	}
 	if(self.walkframe == 61 || self.walkframe == 119)
-	{
 		self.walkframe = 0;
-	}
 
 
 	if (self.walkframe == 31)
 	{
 		new_trick = TRICK_KICKFLIP;
-		self.busting = FALSE;				//finished stunt
+		self.busting = FALSE;			    //finished stunt
 	}
-	if (self.walkframe == 41)		//41:42
+	if (self.walkframe == 41) // 41:42
 	{
 		new_trick = TRICK_GRAP;
-		self.busting = FALSE;				//finished stunt
+		self.busting = FALSE;			    //finished stunt
 	}
 	if (self.walkframe == 48)		//48:49
 	{
 		new_trick = TRICK_FRONTONEEIGHTY;
-		self.busting = FALSE;				//finished stunt
+		self.busting = FALSE;		    	    //finished stunt
 	}
-
-	if (self.walkframe == 60)		//
+	if (self.walkframe == 60)
 	{
-		new_trick = TRICK_THREESIXFLIP;			//test code
-		self.busting = FALSE;				//finished stunt
+		new_trick = TRICK_THREESIXFLIP;		    //test code
+		self.busting = FALSE;			    //finished stunt
 	}
-	if (self.walkframe < 60 && self.walkframe >= 51 )	//
+	if (self.walkframe < 60 && self.walkframe >= 51 )
 	{
-		self.nextthink = time + 0.07;			//play animation faster
+		self.nextthink = time + 0.07;		    //play animation faster
 	}
 
 	if (self.walkframe == 118)
 	{
 		new_trick = TRICK_BACKROT;
-		self.busting = FALSE;				//finished stunt
+		self.busting = FALSE;			    //finished stunt
 	}
-	if (self.walkframe < 119 && self.walkframe >= 109 )	//
-	{
-		self.nextthink = time + 0.07;			//play animation faster
-	}
+	if (self.walkframe < 119 && self.walkframe >= 109 ) //
+		self.nextthink = time + 0.07;		    //play animation faster
 
 
 
@@ -129,23 +116,21 @@ void() skate_walkframes =
 			self.trick = new_trick;
 	}
 
+        // replay grind animation
 	if (self.walkframe == 36)
-		self.walkframe = 33;		//replay grind animation
-
+		self.walkframe = 33;
 	if (self.walkframe == 108)
-		self.walkframe = 105;		//replay grind animation
+		self.walkframe = 105;
 
-
+        // play falling animation faster
 	if (self.walkframe <= 97 && self.walkframe >= 62 )
-	{
-		self.nextthink = time + 0.06;			//play falling animation faster
-	}
-
-	if (self.walkframe == 97 || self.walkframe == 104)		//falling
+		self.nextthink = time + 0.06;		    
+        // falling
+	if (self.walkframe == 97 || self.walkframe == 104)
 	{
 		self.walkframe = 0;
 		self.pausetime = 0;
-		self.board_falling = FALSE;		// player can turn again
+		self.board_falling = FALSE; // player can turn again
 	}
 };
 
@@ -153,27 +138,26 @@ void() skate_walkframes =
 void() skate_fire =
 //-----------------------
 {
-	//player must be onground and not standing
 	if (self.push_fast_time < time && self.flags & FL_ONGROUND && (self.velocity_x || self.velocity_y))
-	{
+	{ // player must be onground and not standing
                 float push_stamina_cost = cvar("sq_stamina_cost_push");
 
                 if(!cvar("sq_stamina"))
                         push_stamina_cost = 0;
 
-                if (self.ammo_shells >= push_stamina_cost && self.board_falling == FALSE && self.trick != TRICK_GRIND)//don't push while falling
-                {
+                if (self.ammo_shells >= push_stamina_cost && self.board_falling == FALSE && self.trick != TRICK_GRIND)
+                { // don't push while falling
                         self.ammo_shells = self.ammo_shells - push_stamina_cost;
-                        sound (self, CHAN_BODY, "player/skaterol.wav", 1, ATTN_NORM);
+                        sound(self, CHAN_BODY, "player/skaterol.wav", 1, ATTN_NORM);
                         self.push_fast_time = time + 2;
                         self.walkframe = 20;
-                        self.attack_finished = time + 0.2;			//don't mess up, hehe (?)
+                        self.attack_finished = time + 0.2; // don't mess up, hehe (?)
                 }
 	}
 
-	if (!(self.flags & FL_ONGROUND) && !(self.busting))	//player in air making stunt !!!
-	{							//use the normal jumping sound for stunts
-		sound (self, CHAN_VOICE, "player/plyrjmp8.wav", 1, ATTN_NORM);
+	if (!(self.flags & FL_ONGROUND) && !(self.busting))
+	{ // TRICKS MID AIR
+		sound(self, CHAN_VOICE, "player/plyrjmp8.wav", 1, ATTN_NORM);
 
 		//check key combinations first...
 		if(self.key_trick4 == TRUE)
@@ -203,33 +187,31 @@ void() skate_fire =
                             self.velocity_z = 700;
 		}
 		else
-		{
 			self.walkframe = 27; // Kickflip
-		}
-		self.busting = TRUE;
+
+                self.busting = TRUE;
 	} 
 };
 
-//--------			//Checks if self is on a rail
+//-------- checks if self is on a rail
 float() onrail =
-//--------			//only one side (right or left) has to be empty
+//-------- only one side (right or left) has to be empty
 {
-        local vector	spot;
+        local vector spot;
 
 	makevectors(self.angles);
 
-//check the right side
-	spot = self.origin - '0 0 36' + (v_right * 16);		//grinding ?
+        //check the right side
+	spot = self.origin - '0 0 36' + (v_right * 16);	//grinding ?
 	traceline (self.origin, spot, TRUE, self);
 	if (trace_fraction == 1.0 && pointcontents(trace_endpos) == CONTENT_EMPTY)
-		return(TRUE);
+		return TRUE;
 
-//check the left side
-	spot = self.origin - '0 0 36' - (v_right * 16);		//grinding ?
+        //check the left side
+	spot = self.origin - '0 0 36' - (v_right * 16);	 //grinding ?
 	traceline (self.origin, spot, TRUE, self);
 	if (trace_fraction == 1.0 && pointcontents(trace_endpos) == CONTENT_EMPTY)
-		return(TRUE);
-
+		return TRUE;
 
 	return(FALSE);
 };
@@ -238,7 +220,7 @@ float() onrail =
 void() skate_fall =
 //----------
 {
-        local float	rand_dmg;
+        local float rand_dmg;
 
         rand_dmg = 0;
         if(cvar("sq_faildamage"))
@@ -256,27 +238,26 @@ void() skate_fall =
 		T_Damage (self, world, world, 0);
 	}
 	else
-	{
 		self.walkframe = 98;
-	}
-	self.board_falling = TRUE;		// turn this way immediately
+
+        self.board_falling = TRUE; // turn this way immediately
 	self.mangle = self.angles;
 	self.busting = FALSE;
-	self.trick = 0;			//no grinds
+	self.trick = 0; // no grinds
 	self.skatespeed = 0;
 	self.jump_flag = 0;
 };
 
 float() check_wrong_direction =
 {
-	local vector	vec;
-	local vector	spot;
-	local float		dot;
+	local vector vec;
+	local vector spot;
+	local float dot;
 	
         if(!cvar("sq_sidedrop"))
                 return FALSE;
 
-	if (self.spawn_time + 1 > time)		//player just respawned, exit
+	if (self.spawn_time + 1 > time) // player just respawned, exit
 		return FALSE; 	
 
 	spot = self.origin + (self.velocity * 0.15); //a spot where player will be in a short time
@@ -284,11 +265,10 @@ float() check_wrong_direction =
 	vec = normalize (spot - self.origin);
 	dot = vec * v_forward;
 	
-	if ( dot > -0.3)	//-0.1 : 0.3 the higher the number, the lower the degree spectrum
-	{
-		return FALSE;		//player looks in right direction
-	}
-	sprint(self, "You have to look in the direction you are moving !\n");
+	if (dot > -0.3)	// -0.1 : 0.3 the higher the number, the lower the degree spectrum
+		return FALSE; // player looks in right direction
+
+        sprint(self, "You have to look in the direction you are moving!\n");
 	return TRUE;
 };
 
@@ -296,15 +276,15 @@ float() check_wrong_direction =
 void() skate_land =
 //-----------------------
 {
-        local float	trick_points;
-        local string    trick_name;
-        local string    random_sentence;
-        local float     fell;
+        local float trick_points;
+        local string trick_name;
+        local string random_sentence;
+        local float fell;
 
 	fell = FALSE;
 
 	if (self.trick == TRICK_GRIND && (self.grind_stop_time + 0.2 > time))
-		return;		//just a little gap in the reel. No landing
+		return; // just a little gap in the reel. No landing
 
 	if (self.watertype == CONTENT_WATER)
 		sound (self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
@@ -312,25 +292,24 @@ void() skate_land =
 	{
 		sprint(self, self.netname);
 		sprint(self, " fell down.\n");
-		self.trick = 0;			//no good landing no trick points !
+		self.trick = 0;	// no good landing no trick points !
 		fell = TRUE;
 	}
 	else if (check_wrong_direction() || self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0)
 	{
-		self.trick = 0;			//no good landing no trick points !
+		self.trick = 0; // no good landing no trick points !
 		fell = TRUE;
 	}
 	else
-	{
 		sound (self, CHAN_VOICE, "player/skatelnd.wav", 1, ATTN_NORM);
-	}
 
-	if (self.trick)					//player busted a trick !
-	{
+	if (self.trick)
+	{ // PLAYER BUSTING A TRICK !
 		if (self.trick == TRICK_KICKFLIP)
 		{
 			trick_points = 1;
 			trick_name = "Kickflip";
+
 			if (self.second_trick)
 			{
 				if (self.second_trick == TRICK_KICKFLIP)
@@ -360,9 +339,10 @@ void() skate_land =
 				}
 			}
 		}
-		else if (self.trick == TRICK_GRIND)//also used for boardslide
+		else if (self.trick == TRICK_GRIND) //also used for boardslide
 		{
 			trick_points = 1;
+
 			if (self.diff_grinds == GRIND_NORMAL)
 			{
 				trick_name = "Grind";
@@ -464,6 +444,7 @@ void() skate_land =
 		{
 			trick_points = 1;
 			trick_name = "Indy Grab";
+
 			if (self.second_trick)
 			{
 				if (self.second_trick == TRICK_KICKFLIP)
@@ -497,6 +478,7 @@ void() skate_land =
 		{
 			trick_points = 1;
 			trick_name = "Pop Shove-it";
+
 			if (self.second_trick)
 			{
 				if (self.second_trick == TRICK_KICKFLIP)
@@ -530,6 +512,7 @@ void() skate_land =
 		{
 			trick_points = 2;
 			trick_name = "360 Shove-it";
+
 			if (self.second_trick)
 			{
 				if (self.second_trick == TRICK_KICKFLIP)
@@ -563,6 +546,7 @@ void() skate_land =
 		{
 			trick_points = 2;
 			trick_name = "Backside 360";
+
 			if (self.second_trick)
 			{
 				if (self.second_trick == TRICK_KICKFLIP)
@@ -593,12 +577,12 @@ void() skate_land =
 			}
 		}
 
-
 		self.frags = self.frags + trick_points;
 
-		self.trick = 0;			//reset
-		self.second_trick = 0;		//
-	}			//end if(self.trick)
+                // reset points
+		self.trick = 0;
+		self.second_trick = 0;
+	}
 
 	self.walkframe = 0;
 	self.busting = FALSE;
@@ -639,7 +623,7 @@ void() skate_land =
 	}
 
 
-	if (trick_points != 0)				//If the player busted a trick, print it !
+	if (trick_points != 0) // If the player busted a trick, print it !
 	{
 		//init the random sentence
 		if (random() < 0.5)
@@ -676,9 +660,7 @@ void() skate_land =
 	}
 
 	if (fell == TRUE && self.invisible_finished == 0)
-	{
 		skate_fall();
-	}
 
 	self.jump_flag = 0;
 };
@@ -689,8 +671,8 @@ float() check_stairs =
 {
         // shallow waters are being seen as steps, which is why you get stuck in them on maps like e1m3
         // water stuff is defined in minus values, check defs.qc
-        local vector	spot;
-        local vector	fake_angles;
+        local vector spot;
+        local vector fake_angles;
 
 	fake_angles = self.angles;
 	fake_angles_x = -10;
@@ -712,7 +694,7 @@ float() check_stairs =
                 // ignores doors
                 if (trace_ent && trace_ent.classname == "door")
                     return FALSE;
-                return(TRUE);	//stairs infront of player !
+                return TRUE; //stairs infront of player !
         }
 
 	//check infront left of the feet
@@ -723,21 +705,21 @@ float() check_stairs =
                 // ignores doors
                 if (trace_ent && trace_ent.classname == "door")
                     return FALSE;
-                return(TRUE);	//stairs infront of player !
+                return TRUE; //stairs infront of player !
         }
 
 
-	return(FALSE);		//flat ground
+	return FALSE; // flat ground
 };
 
 //---------------------
 void() adjust_x_angle =
 //---------------------
 {
-        local vector	spot;
-        local float	front_space;
-        local float	back_space;
-        local float	new_x;
+        local vector spot;
+        local float front_space;
+        local float back_space;
+        local float new_x;
 
 	makevectors(self.angles);
 
@@ -760,52 +742,57 @@ void() adjust_x_angle =
 void() skate_drive =
 //-------------------------
 {
-        local vector 	new_vel;
+        local vector new_vel;
 
-	if (self.flags & FL_ONGROUND)			//don't drive in air
-	{
-		self.jump_vel = '0 0 0';		//reset initial jumping velocity
+	if (self.flags & FL_ONGROUND)
+	{ // don't drive in air
+		self.jump_vel = '0 0 0'; // reset initial jumping velocity
 
 		makevectors(self.angles);
-		new_vel_x = self.velocity_x;				//use new_vel to seperate x and y...
- 		new_vel_y = self.velocity_y;				//...from z
 
-		if (vlen(new_vel) > self.skatespeed)
-			self.skatespeed = vlen(new_vel);
-		if (self.skatespeed > 10)
-			self.skatespeed = self.skatespeed - 10;		//slow down
-		else
-			self.skatespeed = 0;	//stop
+		new_vel_x = self.velocity_x; // use new_vel to seperate x and y from z
+ 		new_vel_y = self.velocity_y;
 
-		new_vel = self.skatespeed * v_forward;		//only forward
-		//new_vel = vlen(new_vel) * v_forward;		//only forward
-		if (self.push_fast_time - 0.5 > time)			//if player pressed
-		{								//fire key. pause for 1 seconds
-			new_vel = 460 * v_forward;			//faster forward
-		}
+		if (vlen(new_vel) > self.skatespeed) 
+			self.skatespeed = vlen(new_vel);        // calc new speed
 
+		if (self.skatespeed > 10)                       // slow down
+			self.skatespeed = self.skatespeed - 10; //
+		else                                            // stop
+			self.skatespeed = 0;                    //
+
+		new_vel = self.skatespeed * v_forward;	        // only forward
+		//new_vel = vlen(new_vel) * v_forward;	        // only forward
+
+		if (self.push_fast_time - 0.5 > time)		// if player pressed fire key. pause for 1 seconds
+			new_vel = 460 * v_forward;		// push player
+
+                // GRINDING
 		if (onrail() && (self.trick == TRICK_GRIND))
-        {
-        //check if player is slower than expected
-            if (vlen(self.velocity) <= 320)
-            {
-                new_vel = 320 * v_forward;        //grind to the right (with frames)
-		self.velocity_z = -120;		//If skating forward or up hill, activate feather falling
-            }
-            if (vlen(self.velocity) > 320)
-            {
-                vlen(new_vel) = vlen(self.velocity);        //grind to the right (with frames)
-		self.velocity_z = -280;			//If skating downhill, activate fox shoes
-            }
-        //end check
-			self.grind_stop_time = time;		//update stop time. when in air, it won't be set
-			if (self.super_sound < time)		//play grinding sound
-			{						//use super_sound for right timing
+                {
+                        // check if player is slower than expected
+                        if (vlen(self.velocity) <= 320)
+                        {
+                            new_vel = 320 * v_forward;          // grind to the right (with frames)
+                            self.velocity_z = -120;		// If skating forward or up hill, activate feather falling
+                        }
+                        if (vlen(self.velocity) > 320)
+                        {
+                            vlen(new_vel) = vlen(self.velocity);// grind to the right (with frames)
+                            self.velocity_z = -280;		// If skating downhill, activate fox shoes
+                        }
+                        // end check
+
+			self.grind_stop_time = time;		// update stop time. when in air, it won't be set
+
+			if (self.super_sound < time)		// play grinding sound
+			{					// use super_sound for right timing
 				self.super_sound = time + 1.2;
 				sound (self, CHAN_BODY, "player/skategnd.wav", 1, ATTN_NORM);
 			}
 		}
 
+                // GRIND SKIP
 		if (!onrail() && (self.trick == TRICK_GRIND) && self.invisible_finished == 0)
 		{
 			sprint(self,"You skipped a grind!\n");
@@ -817,22 +804,18 @@ void() skate_drive =
 		}
 
 
-		if (check_stairs())					//don't drive up stairs
-		{
+		if (check_stairs()) // don't drive up stairs
 			new_vel = '0 0 0';
-		}
 
-		self.velocity_x = new_vel_x;				//don't change up or down movement
-		self.velocity_y = new_vel_y;				//
+		self.velocity_x = new_vel_x; // don't change up or down movement
+		self.velocity_y = new_vel_y; //
 	}
-	else if (self.trick == TRICK_GRIND)		//reset animation when falling
-	{									//down after grind
-		if (self.grind_stop_time + 0.4 < time)//player has to been in air for x(0.4) seconds, if not he falls
+	else if (self.trick == TRICK_GRIND)
+	{ // reset animation when falling down after grind
+		if (self.grind_stop_time + 0.4 < time) // player has to been in air for x(0.4) seconds, if not he falls
 		{
 			if ((self.walkframe >= 33 && self.walkframe <= 36) || (self.walkframe >= 105 && self.walkframe <= 108))
-			{
 				self.walkframe = 0;
-			}
 		//	self.busting = FALSE;
 		}
 		//else
@@ -841,9 +824,9 @@ void() skate_drive =
 		//}
 	}
 	else if (!cvar("sq_strafe") && vlen(self.jump_vel) != 0 && self.super_time == 0)
-	{		// realistic jumping movement (player can't change direction)
-		self.velocity_x = self.jump_vel_x;				//don't change up or down movement
-		self.velocity_y = self.jump_vel_y;				//
+	{ // realistic jumping movement (player can't change direction)
+		self.velocity_x = self.jump_vel_x;  //don't change up or down movement
+		self.velocity_y = self.jump_vel_y;  //
 	}
 
 	water_die();
@@ -854,7 +837,7 @@ void() skate_drive =
 void() Regenerate_Health =
 //-----------------
 {
-        local float     old_health;
+        local float old_health;
 	if (self.health_regen_time < time)
 	{
 		old_health = self.health;
@@ -870,7 +853,7 @@ void() Regenerate_Health =
 	}
 };
 
-//-----------------			I'm using ammo_shells as stamina.
+//----------------- using ammo_shells as stamina
 void() Regenerate_Stamina =
 //-----------------
 {
@@ -889,12 +872,10 @@ void() Regenerate_Stamina =
 	}
 };
 
-
-//-------------------
+//------------------- works only in deep waters
 void() water_die =
 //-------------------
 {
-        // works only in deeper waters
         local float m;
         local float sq_dmg;
 	makevectors(self.angles);

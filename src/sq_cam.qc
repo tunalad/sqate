@@ -1,4 +1,4 @@
-//------------------------		The camera thinks...
+//------------------------ The camera thinks...
 void() cam_think =
 // ------------------------
 {
@@ -13,27 +13,27 @@ void() cam_think =
 	
 	makevectors(self.owner.v_angle);
 	view_org = self.owner.origin - v_forward * 80;
-	view_org = view_org - (self.owner.velocity * 0.05);		//simulate flying camera without perfect reaction
-	
-	limited_angle = self.owner.v_angle_x;	//limit the player's x-angle
+	view_org = view_org - (self.owner.velocity * 0.05); // simulate flying camera without perfect reaction
+
+        // limit the player's x-angle
+	limited_angle = self.owner.v_angle_x; 
 	if (limited_angle > 10)
 		limited_angle = 10;
 	else if (limited_angle < -10)
 		limited_angle = -10;
-	view_org_z = view_org_z + (limited_angle * 1);		//makevectors doesn't include looking up or down
-	
-	traceline (self.owner.origin, view_org, TRUE, self.owner);	//Find the nearest spot to the wall
+	view_org_z = view_org_z + (limited_angle * 1); // makevectors doesn't include looking up or down
+
+        //Find the nearest spot to the wall
+	traceline (self.owner.origin, view_org, TRUE, self.owner);
 	if (trace_fraction == 1.0)
-	{
 		view_org = trace_endpos;
-	}
 	else
 	{
 		calc_dir = normalize(self.owner.origin - trace_endpos);
-		view_org = trace_endpos + (calc_dir * 5);			//don't put directly at the wall (graphic bugs)
+		view_org = trace_endpos + (calc_dir * 5); // don't put directly at the wall (graphic bugs)
 	}
 
-	//view_org_z = view_org_z + (1- trace_fraction) * 20;		//go up a bit
+	// view_org_z = view_org_z + (1- trace_fraction) * 20;		//go up a bit
 
 	setorigin(self, view_org);
 
@@ -47,9 +47,9 @@ void() cam_think =
 
 void() switch_cam =
 {
-	if (self.cam_on)			//already activated
-	{
-		self.cam_on = FALSE;		//deactivate
+	if (self.cam_on)
+	{ // turn off flying cam
+		self.cam_on = FALSE;
 
 		msg_entity = self;                 
 		WriteByte (MSG_ONE, 5);    
@@ -66,7 +66,7 @@ void() switch_cam =
 		sprint(self,"cam deactivated\n");
 	}
 	else
-	{
+	{ // turn on flying cam
 		self.cam_on = TRUE;
 		setorigin(self.cam, self.origin);
 		self.cam.think = cam_think;
