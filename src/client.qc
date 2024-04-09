@@ -318,8 +318,8 @@ void() changelevel_touch =
 
 	if (coop || deathmatch)
 	{
-		bpring(other.netname);
-		bpring(" exited the level\n");
+		bprint(other.netname);
+		bprint(" exited the level\n");
 	}
 
 	nextmap = self.map;
@@ -400,8 +400,8 @@ Player entered the suicide command
 */
 void() ClientKill =
 {
-	bpring(self.netname);
-	bpring(" suicides\n");
+	bprint(self.netname);
+	bprint(" suicides\n");
 	set_suicide_frame();
 	self.modelindex = modelindex_player;
 	self.frags = self.frags - 2; // extra penalty
@@ -1233,8 +1233,8 @@ called when a player connects to a server
 */
 void() ClientConnect =
 {
-	bpring(self.netname);
-	bpring(" entered the game\n");
+	bprint(self.netname);
+	bprint(" entered the game\n");
 
         // a client connecting during an intermission can cause problems
 	if (intermission_running) ExitIntermission();
@@ -1255,10 +1255,10 @@ void() ClientDisconnect =
 	// since they aren't *really* leaving
 
 	// let everyone else know
-	bpring(self.netname);
-	bpring(" left the game with ");
-	bpring(ftos(self.frags));
-	bpring(" frags\n");
+	bprint(self.netname);
+	bprint(" left the game with ");
+	bprint(ftos(self.frags));
+	bprint(" frags\n");
 	sound(self, CHAN_BODY, "player/tornoff2.wav", 1, ATTN_NONE);
 	set_suicide_frame();
 };
@@ -1281,10 +1281,10 @@ void(entity targ, entity attacker) ClientObituary =
 	{
 		if (attacker.classname == "teledeath")
 		{
-			bpring(targ.netname);
-			bpring(" was telefragged by ");
-			bpring(attacker.owner.netname);
-			bpring("\n");
+			bprint(targ.netname);
+			bprint(" was telefragged by ");
+			bprint(attacker.owner.netname);
+			bprint("\n");
 
 			attacker.owner.frags = attacker.owner.frags + 1;
 			return;
@@ -1292,9 +1292,9 @@ void(entity targ, entity attacker) ClientObituary =
 
 		if (attacker.classname == "teledeath2")
 		{
-			bpring("Satan's power deflects ");
-			bpring(targ.netname);
-			bpring("'s telefrag\n");
+			bprint("Satan's power deflects ");
+			bprint(targ.netname);
+			bprint("'s telefrag\n");
 
 			targ.frags = targ.frags - 1;
 			return;
@@ -1306,19 +1306,19 @@ void(entity targ, entity attacker) ClientObituary =
 			{
 				// killed self
 				attacker.frags = attacker.frags - 1;
-				bpring(targ.netname);
+				bprint(targ.netname);
 
 				if (targ.weapon == 64 && targ.waterlevel > 1)
 				{
-					bpring(" discharges into the water.\n");
+					bprint(" discharges into the water.\n");
 					return;
 				}
 				if (targ.weapon == 16)
-					bpring(" tries to put the pin back in\n");
+					bprint(" tries to put the pin back in\n");
 				else if (rnum)
-					bpring(" becomes bored with life\n");
+					bprint(" becomes bored with life\n");
 				else
-					bpring(" checks if his weapon is loaded\n");
+					bprint(" checks if his weapon is loaded\n");
 				return;
 			}
 			else
@@ -1379,10 +1379,10 @@ void(entity targ, entity attacker) ClientObituary =
 					else
 						deathstring2 = "'s shaft\n";
 				}
-				bpring(targ.netname);
-				bpring(deathstring);
-				bpring(attacker.netname);
-				bpring(deathstring2);
+				bprint(targ.netname);
+				bprint(deathstring);
+				bprint(attacker.netname);
+				bprint(deathstring2);
 			}
 			return;
 		}
@@ -1391,7 +1391,7 @@ void(entity targ, entity attacker) ClientObituary =
 			targ.frags = targ.frags - 1; // killed self
 			rnum = targ.watertype;
 
-			bpring(targ.netname);
+			bprint(targ.netname);
 
                         // LIQUIDS
 			if (rnum == -3)
