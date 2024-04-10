@@ -1,3 +1,5 @@
+void(entity item) remove_kind;
+
 void() W_SetCurrentAmmo;
 /* ALL LIGHTS SHOULD BE 0 1 0 IN COLOR ALL OTHER ITEMS SHOULD
 BE .8 .3 .4 IN COLOR */
@@ -25,6 +27,29 @@ void() noclass =
 };
 
 
+// dookieface function, when items_to_remove is >= 4, everything is removed...
+/*
+void(float constant, float items_to_remove) sq_remove_items = 
+{
+        local float current = RM_HP; // the biggest boyo
+        local float temp_itr = items_to_remove;
+        
+        while (current != 0 && temp_itr != 0)
+        {
+                if (temp_itr >= current)
+                {
+                        if (constant == current)
+                        {
+                                remove(self);
+                                temp_itr -= current;
+                        }
+                        return;
+                }
+                current = current / 2;
+        }
+}
+*/
+
 
 /*
 ============
@@ -35,7 +60,7 @@ plants the object on the floor
 */
 void() PlaceItem =
 {
-	local float	oldz;
+	local float oldz;
 
 	self.mdl = self.model;		// so it can be restored on respawn
 	self.flags = FL_ITEM;		// make extra wide
@@ -53,8 +78,10 @@ void() PlaceItem =
 		return;
 	}
 
-        if(!cvar("sq_runes"))
-	    remove(self);
+        bprint(self.classname);
+        bprint("\n");
+        bprint("\n");
+        remove_kind(self);
 };
 
 /*
@@ -114,7 +141,6 @@ void() item_megahealth_rot;
 
 void() item_health =
 {	
-	remove(self);
 	self.touch = health_touch;
 
 	if (self.spawnflags & H_ROTTEN)
@@ -303,7 +329,6 @@ void() armor_touch =
 
 void() item_armor1 =
 {
-	remove(self);
 	self.touch = armor_touch;
 	precache_model ("progs/armor.mdl");
 	setmodel (self, "progs/armor.mdl");
@@ -317,7 +342,6 @@ void() item_armor1 =
 
 void() item_armor2 =
 {
-	remove(self);
 	self.touch = armor_touch;
 	precache_model ("progs/armor.mdl");
 	setmodel (self, "progs/armor.mdl");
@@ -331,7 +355,6 @@ void() item_armor2 =
 
 void() item_armorInv =
 {
-	remove(self);
 	self.touch = armor_touch;
 	precache_model ("progs/armor.mdl");
 	setmodel (self, "progs/armor.mdl");
@@ -531,7 +554,6 @@ void() weapon_touch =
 
 void() weapon_supershotgun =
 {
-	remove(self);
 	precache_model ("progs/g_shot.mdl");
 	setmodel (self, "progs/g_shot.mdl");
 	self.weapon = IT_SUPER_SHOTGUN;
@@ -546,7 +568,6 @@ void() weapon_supershotgun =
 
 void() weapon_nailgun =
 {
-	remove(self);
 	precache_model ("progs/g_nail.mdl");
 	setmodel (self, "progs/g_nail.mdl");
 	self.weapon = IT_NAILGUN;
@@ -561,7 +582,6 @@ void() weapon_nailgun =
 
 void() weapon_supernailgun =
 {
-	remove(self);
 	precache_model ("progs/g_nail2.mdl");
 	setmodel (self, "progs/g_nail2.mdl");
 	self.weapon = IT_SUPER_NAILGUN;
@@ -576,7 +596,6 @@ void() weapon_supernailgun =
 
 void() weapon_grenadelauncher =
 {
-	remove(self);
 	precache_model ("progs/g_rock.mdl");
 	setmodel (self, "progs/g_rock.mdl");
 	self.weapon = 3;
@@ -591,7 +610,6 @@ void() weapon_grenadelauncher =
 
 void() weapon_rocketlauncher =
 {
-	remove(self);
 	precache_model ("progs/g_rock2.mdl");
 	setmodel (self, "progs/g_rock2.mdl");
 	self.weapon = 3;
@@ -607,7 +625,6 @@ void() weapon_rocketlauncher =
 
 void() weapon_lightning =
 {
-	remove(self);
 	precache_model ("progs/g_light.mdl");
 	setmodel (self, "progs/g_light.mdl");
 	self.weapon = 3;
@@ -734,7 +751,6 @@ float WEAPON_BIG2 = 1;
 
 void() item_shells =
 {
-	remove(self);
 	self.touch = ammo_touch;
 
 	if (self.spawnflags & WEAPON_BIG2)
@@ -760,7 +776,6 @@ void() item_shells =
 
 void() item_spikes =
 {
-	remove(self);
 	self.touch = ammo_touch;
 
 	if (self.spawnflags & WEAPON_BIG2)
@@ -786,7 +801,6 @@ void() item_spikes =
 
 void() item_rockets =
 {
-	remove(self);
 	self.touch = ammo_touch;
 
 	if (self.spawnflags & WEAPON_BIG2)
@@ -813,7 +827,6 @@ void() item_rockets =
 
 void() item_cells =
 {
-	remove(self);
 	self.touch = ammo_touch;
 
 	if (self.spawnflags & WEAPON_BIG2)
@@ -1216,10 +1229,6 @@ Player takes no damage from water or slime for 30 seconds
 */
 void() item_artifact_envirosuit =
 {
-	remove(self);				//Squirt
-	return;					//
-
-        /*
 	self.touch = powerup_touch;
 
 	precache_model ("progs/suit.mdl");
@@ -1231,7 +1240,6 @@ void() item_artifact_envirosuit =
 	self.items = IT_SUIT;
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
-        */
 };
 
 

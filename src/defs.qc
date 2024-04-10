@@ -760,3 +760,11 @@ float GRIND_BACKBOARDSLIDE = 3;
 //Competition status...
 float comp_started;
 float comp_timelimit;
+
+// used by `sq_remove_items` function (in items.qc)
+float RM_WPN = 1;
+float RM_ARMOR = 2;
+float RM_RUNE = 4;
+float RM_SUIT = 8;
+float RM_HP = 16;
+float RM_AMMO = 32;

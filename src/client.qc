@@ -6,6 +6,8 @@ void() Regenerate_Stamina;				//
 void() comp_check_time;					//
 
 
+void(float item_type) remove_items_type;
+
 // prototypes
 void() W_WeaponFrame;
 void() W_SetCurrentAmmo;
@@ -86,10 +88,8 @@ void() SetNewParms =
 void() DecodeLevelParms =
 {
 	if (serverflags)
-	{
 		if (world.model == "maps/start.bsp")
-			SetNewParms ();		// take away all stuff on starting new episode
-	}
+			SetNewParms ();	 // take away all stuff on starting new episode
 
 	self.items = parm1;
 	self.health = parm2;
@@ -100,6 +100,11 @@ void() DecodeLevelParms =
 	self.ammo_cells = parm7;
 	self.weapon = parm8;
 	self.armortype = parm9 * 0.01;
+
+        // man I do wish there was something like this:
+        // findall(world, classname, "item_whateverIWantToFind")
+        // but instead I had to write the remove_kind (sq_remove_items.qc)
+        // :)
 };
 
 /*
