@@ -768,3 +768,8 @@ float RM_RUNE = 4;
 float RM_SUIT = 8;
 float RM_HP = 16;
 float RM_AMMO = 32;
+
+// SQATE server related cvars (that require server restarting)
+float sq_stamina;
+float sq_fail_damage;
+float sq_sidedrop;

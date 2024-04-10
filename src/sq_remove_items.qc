@@ -87,7 +87,7 @@ void(entity item) remove_kind =
                         item.classname == "item_cells")) ||
 
                 // shells won't be removed if we're using stamina
-                (itr[5] && !cvar("sq_stamina") && item.classname == "item_shells") 
+                (itr[5] && !sq_stamina && item.classname == "item_shells") 
         )
                 remove(item);
 }

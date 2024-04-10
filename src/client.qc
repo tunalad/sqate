@@ -5,9 +5,6 @@ void() Regenerate_Health;				//Squirt
 void() Regenerate_Stamina;				//
 void() comp_check_time;					//
 
-
-void(float item_type) remove_items_type;
-
 // prototypes
 void() W_WeaponFrame;
 void() W_SetCurrentAmmo;
@@ -82,7 +79,7 @@ void() SetNewParms =
 	parm8 = 1;
 	parm9 = 0;
 
-	if (cvar("sq_stamina")) parm4 = 100; // Squirt - start with 100 stamina
+	if (sq_stamina) parm4 = 100; // Squirt - start with 100 stamina
 };
 
 void() DecodeLevelParms =
@@ -105,6 +102,12 @@ void() DecodeLevelParms =
         // findall(world, classname, "item_whateverIWantToFind")
         // but instead I had to write the remove_kind (sq_remove_items.qc)
         // :)
+
+        // set server related cvars
+	if (cvar("sq_stamina")) sq_stamina = TRUE;
+	if (cvar("sq_fail_damage")) sq_fail_damage = TRUE;
+        if (cvar("sq_sidedrop")) sq_sidedrop = TRUE;
+        
 };
 
 /*
@@ -815,7 +818,7 @@ void() PlayerJump =
 	{       // when skating mode
                 float jump_stamina_cost = cvar("sq_stamina_cost_jump");
 
-                if(!cvar("sq_stamina"))
+                if(!sq_stamina)
                         jump_stamina_cost = 0;
 
 		if (self.ammo_shells >= jump_stamina_cost && self.board_falling == FALSE) // jumping costs stamina (ammo_shells)
@@ -1219,7 +1222,7 @@ void() PlayerPostThink =
 	CheckPowerups ();
 
 	Regenerate_Health();							//Squirt
-	if (cvar("sq_stamina")) Regenerate_Stamina();				//
+	if (sq_stamina) Regenerate_Stamina();				//
 	comp_check_time();							//
 	if (self.board_falling == TRUE && self.pausetime > time)
 	{

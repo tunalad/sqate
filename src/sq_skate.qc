@@ -142,7 +142,7 @@ void() skate_fire =
 	{ // player must be onground and not standing
                 float push_stamina_cost = cvar("sq_stamina_cost_push");
 
-                if(!cvar("sq_stamina"))
+                if(!sq_stamina)
                         push_stamina_cost = 0;
 
                 if (self.ammo_shells >= push_stamina_cost && self.board_falling == FALSE && self.trick != TRICK_GRIND)
@@ -223,7 +223,7 @@ void() skate_fall =
         local float rand_dmg;
 
         rand_dmg = 0;
-        if(cvar("sq_faildamage"))
+        if(sq_fail_damage)
                 rand_dmg = random() * 5 + 15;
 
 	T_Damage (self, world, world, rand_dmg);
@@ -254,7 +254,7 @@ float() check_wrong_direction =
 	local vector spot;
 	local float dot;
 	
-        if(!cvar("sq_sidedrop"))
+        if(!sq_sidedrop)
                 return FALSE;
 
 	if (self.spawn_time + 1 > time) // player just respawned, exit
@@ -677,10 +677,10 @@ float() check_stairs =
 	fake_angles = self.angles;
 	fake_angles_x = -10;
 
-        if(cvar("sq_stairskip") && self.watertype)
+        if(cvar("sq_skip_stair") && self.watertype)
             return FALSE;
 
-        if(cvar("sq_waterskip") && self.watertype < -2)
+        if(cvar("sq_skip_water") && self.watertype < -2)
             return FALSE;
 
 
@@ -823,7 +823,7 @@ void() skate_drive =
 		//	self.busting = TRUE;
 		//}
 	}
-	else if (!cvar("sq_strafe") && vlen(self.jump_vel) != 0 && self.super_time == 0)
+	else if (!cvar("sq_airstrafe") && vlen(self.jump_vel) != 0 && self.super_time == 0)
 	{ // realistic jumping movement (player can't change direction)
 		self.velocity_x = self.jump_vel_x;  //don't change up or down movement
 		self.velocity_y = self.jump_vel_y;  //
