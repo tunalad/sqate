@@ -2,7 +2,7 @@ void() water_die;
 
 void() switch_skating =
 {
-        if (!cvar("sq_walking"))
+        if (!cvar("sq_walking") && self.skating)
         {
                 bprint("Walking mode not allowed, use sq_walking 1 to enable it.\n");
                 return;

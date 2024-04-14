@@ -4,6 +4,7 @@ void() skate_drive;					//
 void() Regenerate_Health;				//Squirt
 void() Regenerate_Stamina;				//
 void() comp_check_time;					//
+void() switch_skating;
 
 // prototypes
 void() W_WeaponFrame;
@@ -1179,6 +1180,9 @@ void() PlayerPostThink =
 	if (self.view_ofs == '0 0 0' || self.deadflag)
 		return;
 
+        // force skating
+        if (!cvar("sq_walking") && !self.skating)
+                switch_skating();
 
         // per player model handling
         if (self.skating)
