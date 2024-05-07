@@ -771,5 +771,7 @@ float RM_AMMO = 32;
 
 // SQATE server related cvars (that require server restarting)
 float sq_stamina;
+float sq_fail_trick;
+float sq_fail_fall;
 float sq_fail_damage;
 float sq_sidedrop;

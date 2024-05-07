@@ -106,6 +106,8 @@ void() DecodeLevelParms =
 
         // set server related cvars
 	if (cvar("sq_stamina")) sq_stamina = TRUE;
+	if (cvar("sq_fail_trick")) sq_fail_trick = TRUE;
+	if (cvar("sq_fail_fall")) sq_fail_fall = TRUE;
 	if (cvar("sq_fail_damage")) sq_fail_damage = TRUE;
         if (cvar("sq_sidedrop")) sq_sidedrop = TRUE;
         

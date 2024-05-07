@@ -288,14 +288,14 @@ void() skate_land =
 
 	if (self.watertype == CONTENT_WATER)
 		sound (self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
-	else if (self.jump_flag < -650 && self.invisible_finished == 0) //fell down
+	else if (self.jump_flag < -650 && self.invisible_finished == 0 && sq_fail_fall) //fell down
 	{
 		sprint(self, self.netname);
 		sprint(self, " fell down.\n");
 		self.trick = 0;	// no good landing no trick points !
 		fell = TRUE;
 	}
-	else if (check_wrong_direction() || self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0)
+	else if (check_wrong_direction() || self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0 && sq_fail_trick)
 	{
 		self.trick = 0; // no good landing no trick points !
 		fell = TRUE;
