@@ -16,10 +16,10 @@ void() comp_check_time =
         local entity plr, best;
         local float num; 
 
-	if(comp_started == FALSE) return;
+	if (comp_started == FALSE) return;
 
         // competition is over
-	if(comp_timelimit < time)
+	if (comp_timelimit < time)
 	{
                 best = world;
                 plr = nextent(world);

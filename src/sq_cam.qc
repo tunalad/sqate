@@ -38,8 +38,8 @@ void() cam_think =
 	setorigin(self, view_org);
 
 	msg_entity = self.owner;
-	WriteByte (MSG_ONE, 5);
-	WriteEntity (MSG_ONE, self);
+	WriteByte(MSG_ONE, 5);
+	WriteEntity(MSG_ONE, self);
 
 	self.think = cam_think;
 	self.nextthink = time + 0.01;
@@ -52,9 +52,9 @@ void() switch_cam =
 		self.cam_on = FALSE;
 
 		msg_entity = self;                 
-		WriteByte (MSG_ONE, 5);    
-		WriteEntity (MSG_ONE, self);
-		WriteByte (MSG_ONE, 10);  
+		WriteByte(MSG_ONE, 5);    
+		WriteEntity(MSG_ONE, self);
+		WriteByte(MSG_ONE, 10);  
 		WriteAngle(MSG_ONE, self.v_angle_x);    
 		WriteAngle(MSG_ONE, self.v_angle_y);    
 		WriteAngle(MSG_ONE, self.v_angle_z);

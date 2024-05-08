@@ -65,25 +65,25 @@ void() skate_walkframes =
 
 	if (self.walkframe == 12 || self.walkframe == 19)
 		self.walkframe = 0;
-	if(self.walkframe == 26 || self.walkframe == 32)
+	if (self.walkframe == 26 || self.walkframe == 32)
 		self.walkframe = 0;
-	if(self.walkframe == 43 || self.walkframe == 50)
+	if (self.walkframe == 43 || self.walkframe == 50)
 		self.walkframe = 0;
-	if(self.walkframe == 61 || self.walkframe == 119)
+	if (self.walkframe == 61 || self.walkframe == 119)
 		self.walkframe = 0;
 
 
 	if (self.walkframe == 31)
 	{
 		new_trick = TRICK_KICKFLIP;
-		self.busting = FALSE;			    //finished stunt
+		self.busting = FALSE;			    // finished stunt
 	}
 	if (self.walkframe == 41) // 41:42
 	{
 		new_trick = TRICK_GRAP;
-		self.busting = FALSE;			    //finished stunt
+		self.busting = FALSE;			    // finished stunt
 	}
-	if (self.walkframe == 48)		//48:49
+	if (self.walkframe == 48)		            // 48:49
 	{
 		new_trick = TRICK_FRONTONEEIGHTY;
 		self.busting = FALSE;		    	    //finished stunt
@@ -140,7 +140,7 @@ void() skate_fire =
 {
 	if (self.push_fast_time < time && self.flags & FL_ONGROUND && (self.velocity_x || self.velocity_y))
 	{ // player must be onground and not standing
-                float push_stamina_cost = cvar("sq_stamina_cost_push");
+                local float push_stamina_cost = cvar("sq_stamina_cost_push");
 
                 if(!sq_stamina)
                         push_stamina_cost = 0;
@@ -203,17 +203,17 @@ float() onrail =
 
         //check the right side
 	spot = self.origin - '0 0 36' + (v_right * 16);	//grinding ?
-	traceline (self.origin, spot, TRUE, self);
+	traceline(self.origin, spot, TRUE, self);
 	if (trace_fraction == 1.0 && pointcontents(trace_endpos) == CONTENT_EMPTY)
 		return TRUE;
 
         //check the left side
 	spot = self.origin - '0 0 36' - (v_right * 16);	 //grinding ?
-	traceline (self.origin, spot, TRUE, self);
+	traceline(self.origin, spot, TRUE, self);
 	if (trace_fraction == 1.0 && pointcontents(trace_endpos) == CONTENT_EMPTY)
 		return TRUE;
 
-	return(FALSE);
+	return FALSE;
 };
 
 //----------
@@ -226,8 +226,8 @@ void() skate_fall =
         if(sq_fail_damage)
                 rand_dmg = random() * 5 + 15;
 
-	T_Damage (self, world, world, rand_dmg);
-	sound (self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
+	T_Damage(self, world, world, rand_dmg);
+	sound(self, CHAN_VOICE, "player/land2.wav", 1, ATTN_NORM);
 	self.deathtype = "falling";
 
 
@@ -235,7 +235,7 @@ void() skate_fall =
 	if (self.jump_flag <= -500)
 	{
 		self.walkframe = 62;
-		T_Damage (self, world, world, 0);
+		T_Damage(self, world, world, 0);
 	}
 	else
 		self.walkframe = 98;
@@ -261,8 +261,8 @@ float() check_wrong_direction =
 		return FALSE; 	
 
 	spot = self.origin + (self.velocity * 0.15); //a spot where player will be in a short time
-	makevectors (self.angles);
-	vec = normalize (spot - self.origin);
+	makevectors(self.angles);
+	vec = normalize(spot - self.origin);
 	dot = vec * v_forward;
 	
 	if (dot > -0.3)	// -0.1 : 0.3 the higher the number, the lower the degree spectrum
@@ -287,7 +287,7 @@ void() skate_land =
 		return; // just a little gap in the reel. No landing
 
 	if (self.watertype == CONTENT_WATER)
-		sound (self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
+		sound(self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
 	else if (self.jump_flag < -650 && self.invisible_finished == 0 && sq_fail_fall) //fell down
 	{
 		sprint(self, self.netname);
@@ -301,7 +301,7 @@ void() skate_land =
 		fell = TRUE;
 	}
 	else
-		sound (self, CHAN_VOICE, "player/skatelnd.wav", 1, ATTN_NORM);
+		sound(self, CHAN_VOICE, "player/skatelnd.wav", 1, ATTN_NORM);
 
 	if (self.trick)
 	{ // PLAYER BUSTING A TRICK !
@@ -688,7 +688,7 @@ float() check_stairs =
 
 	//check infront right of the feet
 	spot = self.origin - '0 0 16' + (v_forward * 26) + (v_right * 16);
-	traceline (self.origin, spot, TRUE, self);
+	traceline(self.origin, spot, TRUE, self);
 	if (trace_fraction != 1.0 || pointcontents(trace_endpos) != CONTENT_EMPTY)
         {
                 // ignores doors
@@ -699,12 +699,12 @@ float() check_stairs =
 
 	//check infront left of the feet
 	spot = self.origin - '0 0 16' + (v_forward * 26) - (v_right * 16);
-	traceline (self.origin, spot, TRUE, self);
+	traceline(self.origin, spot, TRUE, self);
 	if (trace_fraction != 1.0 || pointcontents(trace_endpos) != CONTENT_EMPTY)
         {
                 // ignores doors
-                if (trace_ent && trace_ent.classname == "door")
-                    return FALSE;
+                if (trace_ent && trace_ent.classname == "door") return FALSE;
+
                 return TRUE; //stairs infront of player !
         }
 
@@ -725,12 +725,12 @@ void() adjust_x_angle =
 
 	//check infront of the feet
 	spot = self.origin - '0 0 36' + (v_forward * 16);
-	traceline (self.origin, spot, TRUE, self);
+	traceline(self.origin, spot, TRUE, self);
 	front_space = trace_fraction;
 
 	//check behind the feet
 	spot = self.origin - '0 0 36' - (v_forward * 16);
-	traceline (self.origin, spot, TRUE, self);
+	traceline(self.origin, spot, TRUE, self);
 	back_space = trace_fraction;
 
 	new_x = back_space - front_space;
@@ -788,7 +788,7 @@ void() skate_drive =
 			if (self.super_sound < time)		// play grinding sound
 			{					// use super_sound for right timing
 				self.super_sound = time + 1.2;
-				sound (self, CHAN_BODY, "player/skategnd.wav", 1, ATTN_NORM);
+				sound(self, CHAN_BODY, "player/skategnd.wav", 1, ATTN_NORM);
 			}
 		}
 
@@ -893,6 +893,6 @@ void() water_die =
 		else if(m == CONTENT_SLIME)
 			self.deathtype = "slime";
 
-		T_Damage (self, world, world, sq_dmg); //always die in water
+		T_Damage(self, world, world, sq_dmg); //always die in water
 	}
 };

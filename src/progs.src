@@ -36,7 +36,7 @@ monsters/boss.qc
 
 monsters/tarbaby.qc		// registered
 monsters/hknight.qc		// registered
-monsters/fish.qc			// registered
+monsters/fish.qc		// registered
 monsters/shalrath.qc		// registered
 monsters/enforcer.qc		// registered
 monsters/oldone.qc		// registered
