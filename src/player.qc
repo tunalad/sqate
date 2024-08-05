@@ -99,7 +99,7 @@ void() player_stand1 = [ $axstnd1, player_stand1 ]
 		return;
 	}
 
-        
+
         if (self.skating)       // Squirt- skating frames
         {
                 skate_walkframes();
@@ -566,8 +566,8 @@ void() GibPlayer =
 
 void() PlayerDie =
 {
-	local float i;
-	
+	//float i;
+
 	self.items = self.items - (self.items & IT_INVISIBILITY);
 	self.invisible_finished = 0; // don't die as eyes
 	self.invincible_finished = 0;

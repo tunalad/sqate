@@ -316,7 +316,7 @@ void() play_teleport =
 
 void(vector org) spawn_tfog =
 {
-	local s = spawn();
+	s = spawn();
 	s.origin = org;
 	s.nextthink = time + 0.2;
 	s.think = play_teleport;
@@ -655,4 +655,3 @@ void() trigger_monsterjump =
 	InitTrigger();
 	self.touch = trigger_monsterjump_touch;
 };
-
