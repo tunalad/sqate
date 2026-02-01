@@ -11,7 +11,7 @@ build:
 package: build
 	@echo "Packaging mod in '$(MOD_NAME)' directory."
 	mkdir -p $(MOD_NAME)
-        cp -r gfx gfx.wad maps progs progs.dat sound CFG\ Files/* demos/* $(MOD_NAME)
+	cp -r gfx gfx.wad maps progs progs.dat sound CFG\ Files/* demos/* $(MOD_NAME)
 
 clean:
 	@echo "Cleaning up project directory."
