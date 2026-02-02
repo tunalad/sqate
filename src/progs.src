@@ -8,6 +8,8 @@ combat.qc
 items.qc
 weapons.qc
 
+sq_monster_platform.qc
+
 world.qc
 client.qc
 player.qc

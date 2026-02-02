@@ -93,6 +93,8 @@ void() walkmonster_start_go =
 		dprint("\n");
 	}
 
+        monster_create_platform();
+
 	self.takedamage = DAMAGE_AIM;
 
 	self.ideal_yaw = self.angles * '0 1 0';
@@ -244,5 +246,3 @@ void() swimmonster_start =
 	self.think = swimmonster_start_go;
 	total_monsters = total_monsters + 1;
 };
-
-

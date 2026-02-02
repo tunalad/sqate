@@ -71,7 +71,7 @@ void() SetNewParms =
 	parm1 = IT_SHOTGUN | IT_AXE;
 	parm2 = 100;
 	parm3 = 0;
-	parm4 = 25;			
+	parm4 = 25;
 	parm5 = 0;
 	parm6 = 0;
 	parm7 = 0;
@@ -107,7 +107,7 @@ void() DecodeLevelParms =
 	if (cvar("sq_fail_fall")) sq_fail_fall = TRUE;
 	if (cvar("sq_fail_damage")) sq_fail_damage = TRUE;
         if (cvar("sq_sidedrop")) sq_sidedrop = TRUE;
-        
+        if (cvar("sq_monsterjump")) sq_monsterjump = TRUE;
 };
 
 /*
@@ -778,7 +778,7 @@ void() PlayerJump =
 
         // SQATE - JUMPING
 	if (self.skating == FALSE)
-	{       // when walking mode 
+	{       // when walking mode
 		sound(self, CHAN_BODY, "player/plyrjmp8.wav", 1, ATTN_NORM);
 		self.velocity_z = self.velocity_z + 270;
 	}
@@ -1019,7 +1019,6 @@ void() CheckPowerups =
 			self.invisible_time = 0;
 		}
 
-                
                 if (self.skating)
                 {       // Switch to the model of only the skateboard. - Fluffacorn
                         setmodel(self, "progs/invisiboard.mdl");
@@ -1165,6 +1164,19 @@ void() PlayerPostThink =
         // do weapon stuff
 	W_WeaponFrame ();
 
+        // monster trick
+        if (self.standing_on_monster && self.skating)
+        {
+                if (self.trick)
+                {
+                        self.velocity_z = self.velocity_z + (270 * 1.2);
+                        self.flags = self.flags - (self.flags & FL_ONGROUND);
+                }
+                //centerprint(self, ftos(self.trick));
+                skate_land();
+                self.standing_on_monster = FALSE;
+        }
+
 
         // check to see if player landed and play landing sound
 	if (self.skating && (self.jump_flag < -50) && (self.flags & FL_ONGROUND) && (self.health > 0))
@@ -1182,7 +1194,7 @@ void() PlayerPostThink =
 			self.deathtype = "falling";
 		}
                 // safe landing (oof sound)
-		else                                    
+		else
 			sound(self, CHAN_VOICE, "player/land.wav", 1, ATTN_NORM);
 
 		self.jump_flag = 0;
@@ -1231,7 +1243,7 @@ called when a player disconnects from a server
 void() ClientDisconnect =
 {
 	if (gameover) return;
-	// if the level end trigger has been activated, 
+	// if the level end trigger has been activated,
         // just return since they aren't *really* leaving
 
 	// let everyone else know
@@ -1482,7 +1494,7 @@ void(entity targ, entity attacker) ClientObituary =
 				bprint(" ate a lavaball\n");
                         else if (attacker.classname == "trigger_changelevel")
 				bprint(" tried to leave\n");
-                        else 
+                        else
                                 bprint(" died\n");
 
                         return;

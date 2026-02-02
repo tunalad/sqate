@@ -750,7 +750,7 @@ float(entity targ, entity inflictor) CanDamage;
 .float key_trick2;		// .......
 .float key_trick3;		// .......
 .float key_trick4;		// .......
-.float diff_grinds;		
+.float diff_grinds;
 
 .float health_regen_time;	// health regenerates
 .float stamina_regen_time;	// stamina regenerates
@@ -794,3 +794,8 @@ float sq_fail_trick;
 float sq_fail_fall;
 float sq_fail_damage;
 float sq_sidedrop;
+float sq_monsterjump;
+
+// monster platform for monster tricks
+.float monster_top;
+.float standing_on_monster;

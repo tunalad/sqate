@@ -124,7 +124,7 @@ void() skate_walkframes =
 
         // play falling animation faster
 	if (self.walkframe <= 97 && self.walkframe >= 62 )
-		self.nextthink = time + 0.06;		    
+		self.nextthink = time + 0.06;
         // falling
 	if (self.walkframe == 97 || self.walkframe == 104)
 	{
@@ -155,7 +155,7 @@ void() skate_fire =
                 }
 	}
 
-	if (!(self.flags & FL_ONGROUND) && !(self.busting))
+	if (!(self.flags & FL_ONGROUND) && !(self.busting) || self.standing_on_monster)
 	{ // TRICKS MID AIR
 		sound(self, CHAN_VOICE, "player/plyrjmp8.wav", 1, ATTN_NORM);
 
@@ -190,7 +190,7 @@ void() skate_fire =
 			self.walkframe = 27; // Kickflip
 
                 self.busting = TRUE;
-	} 
+	}
 };
 
 //-------- checks if self is on a rail
@@ -253,18 +253,18 @@ float() check_wrong_direction =
 	local vector vec;
 	local vector spot;
 	local float dot;
-	
+
         if(!sq_sidedrop)
                 return FALSE;
 
 	if (self.spawn_time + 1 > time) // player just respawned, exit
-		return FALSE; 	
+		return FALSE;
 
 	spot = self.origin + (self.velocity * 0.15); //a spot where player will be in a short time
 	makevectors(self.angles);
 	vec = normalize(spot - self.origin);
 	dot = vec * v_forward;
-	
+
 	if (dot > -0.3)	// -0.1 : 0.3 the higher the number, the lower the degree spectrum
 		return FALSE; // player looks in right direction
 
@@ -753,7 +753,7 @@ void() skate_drive =
 		new_vel_x = self.velocity_x; // use new_vel to seperate x and y from z
  		new_vel_y = self.velocity_y;
 
-		if (vlen(new_vel) > self.skatespeed) 
+		if (vlen(new_vel) > self.skatespeed)
 			self.skatespeed = vlen(new_vel);        // calc new speed
 
 		if (self.skatespeed > 10)                       // slow down
@@ -859,7 +859,7 @@ void() Regenerate_Stamina =
 {
 	if (self.stamina_regen_time < time)
 	{
-                if (cvar("sq_stamina_recovery")) 
+                if (cvar("sq_stamina_recovery"))
                         self.ammo_shells = self.ammo_shells + cvar("sq_stamina_recovery");
 
 		if (self.ammo_shells > 100)
