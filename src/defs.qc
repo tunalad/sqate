@@ -768,7 +768,7 @@ float TRICK_GRAP = 3;
 float TRICK_FRONTONEEIGHTY = 4;
 float TRICK_THREESIXFLIP = 5;
 float TRICK_BACKROT = 6;
-
+float TRICK_MONSTERJUMP = 7;
 
 
 //.diff_grinds is set to one of theese

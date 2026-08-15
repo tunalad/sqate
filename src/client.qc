@@ -1167,13 +1167,31 @@ void() PlayerPostThink =
         // monster trick
         if (self.standing_on_monster && self.skating)
         {
-                if (self.trick)
+                if ((self.busting || self.trick) && self.velocity_z <= 0)
                 {
-                        self.velocity_z = self.velocity_z + (270 * 1.2);
-                        self.flags = self.flags - (self.flags & FL_ONGROUND);
+                        if (self.trick && self.second_trick)
+                        {
+                                skate_land();
+                                self.trick = TRICK_MONSTERJUMP;
+                                self.velocity_z = self.velocity_z + (270 * 1.2);
+                                self.flags = self.flags - (self.flags & FL_ONGROUND);
+                        }
+                        else if (self.trick && self.trick != TRICK_MONSTERJUMP)
+                        {
+                                self.second_trick = TRICK_MONSTERJUMP;
+                                skate_land();
+                                self.trick = TRICK_MONSTERJUMP;
+                                self.velocity_z = self.velocity_z + (270 * 1.2);
+                                self.flags = self.flags - (self.flags & FL_ONGROUND);
+                        }
+
+                        else if (self.busting)
+                        {
+                                self.trick = TRICK_MONSTERJUMP;
+                                self.velocity_z = self.velocity_z + (270 * 1.2);
+                                self.flags = self.flags - (self.flags & FL_ONGROUND);
+                        }
                 }
-                //centerprint(self, ftos(self.trick));
-                skate_land();
                 self.standing_on_monster = FALSE;
         }
 

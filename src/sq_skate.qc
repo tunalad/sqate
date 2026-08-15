@@ -244,7 +244,8 @@ void() skate_fall =
 	self.mangle = self.angles;
 	self.busting = FALSE;
 	self.trick = 0; // no grinds
-	self.skatespeed = 0;
+	self.second_trick = 0; // wiping tricks
+        self.skatespeed = 0;
 	self.jump_flag = 0;
 };
 
@@ -295,7 +296,7 @@ void() skate_land =
 		self.trick = 0;	// no good landing no trick points !
 		fell = TRUE;
 	}
-	else if (check_wrong_direction() || self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0 && sq_fail_trick)
+	else if (check_wrong_direction() || self.busting || (self.grind_stop_time + 0.4 > time && !onrail()) && self.invisible_finished == 0 && sq_fail_trick && !self.standing_on_monster)
 	{
 		self.trick = 0; // no good landing no trick points !
 		fell = TRUE;
@@ -337,6 +338,11 @@ void() skate_land =
 					trick_points = 4;
 					trick_name = "Kickflip to Backside 360";
 				}
+				else if (self.second_trick == TRICK_MONSTERJUMP)
+				{
+					trick_points = 4;
+					trick_name = "Kickflip to Monster jump";
+				}
 			}
 		}
 		else if (self.trick == TRICK_GRIND) //also used for boardslide
@@ -348,95 +354,110 @@ void() skate_land =
 				trick_name = "Grind";
 				if (self.second_trick)
 				{
-				if (self.second_trick == TRICK_KICKFLIP)
-				{
-					trick_points = 2;
-					trick_name = "Grind to Kickflip";
-				}
-				else if (self.second_trick == TRICK_GRAP)
-				{
-					trick_points = 3;
-					trick_name = "Grind to Indy Grab";
-				}
-				else if (self.second_trick == TRICK_FRONTONEEIGHTY)
-				{
-					trick_points = 3;
-					trick_name = "Grind to Pop Shove-it";
-				}
-				else if (self.second_trick == TRICK_THREESIXFLIP)
-				{
-					trick_points = 4;
-					trick_name = "Grind to 360 Shove-it";
-				}
-				else if (self.second_trick == TRICK_BACKROT)
-				{
-					trick_points = 4;
-					trick_name = "Grind to Backside 360";
-				}
+                                        if (self.second_trick == TRICK_KICKFLIP)
+                                        {
+                                                trick_points = 2;
+                                                trick_name = "Grind to Kickflip";
+                                        }
+                                        else if (self.second_trick == TRICK_GRAP)
+                                        {
+                                                trick_points = 3;
+                                                trick_name = "Grind to Indy Grab";
+                                        }
+                                        else if (self.second_trick == TRICK_FRONTONEEIGHTY)
+                                        {
+                                                trick_points = 3;
+                                                trick_name = "Grind to Pop Shove-it";
+                                        }
+                                        else if (self.second_trick == TRICK_THREESIXFLIP)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Grind to 360 Shove-it";
+                                        }
+                                        else if (self.second_trick == TRICK_BACKROT)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Grind to Backside 360";
+                                        }
+                                        else if (self.second_trick == TRICK_MONSTERJUMP)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Grind to Monster jump";
+                                        }
 				}
 			}
 			else if (self.diff_grinds == GRIND_BOARDSLIDE)
 			{
 				trick_name = "Boardslide";
 				if (self.second_trick)
-				{
-				if (self.second_trick == TRICK_KICKFLIP)
-				{
-					trick_points = 2;
-					trick_name = "Boardslide to Kickflip";
-				}
-				else if (self.second_trick == TRICK_GRAP)
-				{
-					trick_points = 3;
-					trick_name = "Boardslide to Indy Grab";
-				}
-				else if (self.second_trick == TRICK_FRONTONEEIGHTY)
-				{
-					trick_points = 3;
-					trick_name = "Boardslide to Pop Shove-it";
-				}
-				else if (self.second_trick == TRICK_THREESIXFLIP)
-				{
-					trick_points = 4;
-					trick_name = "Boardslide to 360 Shove-it";
-				}
-				else if (self.second_trick == TRICK_BACKROT)
-				{
-					trick_points = 4;
-					trick_name = "Boardslide to Backside 360";
-				}
+                                        {
+                                        if (self.second_trick == TRICK_KICKFLIP)
+                                        {
+                                                trick_points = 2;
+                                                trick_name = "Boardslide to Kickflip";
+                                        }
+                                        else if (self.second_trick == TRICK_GRAP)
+                                        {
+                                                trick_points = 3;
+                                                trick_name = "Boardslide to Indy Grab";
+                                        }
+                                        else if (self.second_trick == TRICK_FRONTONEEIGHTY)
+                                        {
+                                                trick_points = 3;
+                                                trick_name = "Boardslide to Pop Shove-it";
+                                        }
+                                        else if (self.second_trick == TRICK_THREESIXFLIP)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Boardslide to 360 Shove-it";
+                                        }
+                                        else if (self.second_trick == TRICK_BACKROT)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Boardslide to Backside 360";
+                                        }
+                                        else if (self.second_trick == TRICK_MONSTERJUMP)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Boardslide to Monster jump";
+                                        }
 				}
 			}
 			else if (self.diff_grinds == GRIND_BACKBOARDSLIDE)
 			{
 				trick_name = "Backside Boardslide";
-					if (self.second_trick)
-				{
-				if (self.second_trick == TRICK_KICKFLIP)
-				{
-					trick_points = 2;
-					trick_name = "Backside Boardslide to Kickflip";
-				}
-				else if (self.second_trick == TRICK_GRAP)
-				{
-					trick_points = 3;
-					trick_name = "Backside Boardslide to Indy Grab";
-				}
-				else if (self.second_trick == TRICK_FRONTONEEIGHTY)
-				{
-					trick_points = 3;
-					trick_name = "Backside Boardslide to Pop Shove-it";
-				}
-				else if (self.second_trick == TRICK_THREESIXFLIP)
-				{
-					trick_points = 4;
-					trick_name = "Backside Boardslide to 360 Shove-it";
-				}
-				else if (self.second_trick == TRICK_BACKROT)
-				{
-					trick_points = 4;
-					trick_name = "Backside Boardslide to Backside 360";
-				}
+                                if (self.second_trick)
+                                        {
+                                        if (self.second_trick == TRICK_KICKFLIP)
+                                        {
+                                                trick_points = 2;
+                                                trick_name = "Backside Boardslide to Kickflip";
+                                        }
+                                        else if (self.second_trick == TRICK_GRAP)
+                                        {
+                                                trick_points = 3;
+                                                trick_name = "Backside Boardslide to Indy Grab";
+                                        }
+                                        else if (self.second_trick == TRICK_FRONTONEEIGHTY)
+                                        {
+                                                trick_points = 3;
+                                                trick_name = "Backside Boardslide to Pop Shove-it";
+                                        }
+                                        else if (self.second_trick == TRICK_THREESIXFLIP)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Backside Boardslide to 360 Shove-it";
+                                        }
+                                        else if (self.second_trick == TRICK_BACKROT)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Backside Boardslide to Backside 360";
+                                        }
+                                        else if (self.second_trick == TRICK_MONSTERJUMP)
+                                        {
+                                                trick_points = 4;
+                                                trick_name = "Backside Boardslide to Monster jump";
+                                        }
 				}
 			}
 		}
@@ -472,6 +493,11 @@ void() skate_land =
 					trick_points = 4;
 					trick_name = "Indy Grab to Backside 360";
 				}
+                                else if (self.second_trick == TRICK_MONSTERJUMP)
+                                {
+                                        trick_points = 4;
+                                        trick_name = "Indy Grab to Monster jump";
+                                }
 			}
 		}
 		else if (self.trick == TRICK_FRONTONEEIGHTY)
@@ -506,6 +532,11 @@ void() skate_land =
 					trick_points = 4;
 					trick_name = "Pop Shove-it to Backside 360";
 				}
+                                else if (self.second_trick == TRICK_MONSTERJUMP)
+                                {
+                                        trick_points = 4;
+                                        trick_name = "Pop Shove-it to Monster jump";
+                                }
 			}
 		}
 		else if (self.trick == TRICK_THREESIXFLIP)
@@ -540,6 +571,11 @@ void() skate_land =
 					trick_points = 5;
 					trick_name = "360 Shove-it to Backside 360";
 				}
+                                else if (self.second_trick == TRICK_MONSTERJUMP)
+                                {
+                                        trick_points = 5;
+                                        trick_name = "360 Shove-it to Monster jump";
+                                }
 			}
 		}
 		else if (self.trick == TRICK_BACKROT)
@@ -574,9 +610,47 @@ void() skate_land =
 					trick_points = 5;
 					trick_name = "Double Backside 360";
 				}
+                                else if (self.second_trick == TRICK_MONSTERJUMP)
+                                {
+                                        trick_points = 5;
+                                        trick_name = "Backside 360 to Monster jump";
+                                }
 			}
 		}
+		else if (self.trick == TRICK_MONSTERJUMP)
+		{
+			trick_points = 2;
+			trick_name = "Monster jump";
 
+			if (self.second_trick)
+			{
+				if (self.second_trick == TRICK_KICKFLIP)
+				{
+					trick_points = 4;
+					trick_name = "Monster jump to Kickflip";
+				}
+				else if (self.second_trick == TRICK_GRAP)
+				{
+					trick_points = 4;
+					trick_name = "Monster jump to Indy Grab";
+				}
+				else if (self.second_trick == TRICK_FRONTONEEIGHTY)
+				{
+					trick_points = 4;
+					trick_name = "Monster jump to Pop Shove-it";
+				}
+				else if (self.second_trick == TRICK_THREESIXFLIP)
+				{
+					trick_points = 5;
+					trick_name = "Monster jump to 360 Shove-it";
+				}
+				else if (self.second_trick == TRICK_BACKROT)
+				{
+					trick_points = 5;
+					trick_name = "Monster jump to Backside 360";
+				}
+			}
+		}
 		self.frags = self.frags + trick_points;
 
                 // reset points
