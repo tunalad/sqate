@@ -37,17 +37,17 @@ void() monster_create_platform =
 
         platform = spawn();
         platform.owner = self;
-        platform.solid = SOLID_TRIGGER;
+        platform.solid = SOLID_BSP;
         platform.movetype = MOVETYPE_NONE;
         platform.classname = "monster_platform";
 
-        pmin_x = self.mins_x * 0.75;
-        pmin_y = self.mins_y * 0.75;
+        pmin_x = self.mins_x * 1;
+        pmin_y = self.mins_y * 1;
         pmin_z = self.maxs_z;
 
-        pmax_x = self.maxs_x * 0.75;
-        pmax_y = self.maxs_y * 0.75;
-        pmax_z = self.maxs_z;
+        pmax_x = self.maxs_x * 1;
+        pmax_y = self.maxs_y * 1;
+        pmax_z = self.maxs_z + 1;
 
         setsize(platform, pmin, pmax);
         setorigin(platform, self.origin);

@@ -288,7 +288,7 @@ void() skate_land =
 
 	if (self.watertype == CONTENT_WATER)
 		sound(self, CHAN_BODY, "player/h2ojump.wav", 1, ATTN_NORM);
-	else if (self.jump_flag < -650 && self.invisible_finished == 0 && sq_fail_fall) //fell down
+	else if (self.jump_flag < -650 && self.invisible_finished == 0 && sq_fail_fall && !self.standing_on_monster) //fell down
 	{
 		sprint(self, self.netname);
 		sprint(self, " fell down.\n");
