@@ -1175,6 +1175,7 @@ void() PlayerPostThink =
                                 self.trick = TRICK_MONSTERJUMP;
                                 self.velocity_z = self.velocity_z + (270 * 1.2);
                                 self.flags = self.flags - (self.flags & FL_ONGROUND);
+                                self.jump_vel = '0 0 0';
                         }
                         else if (self.trick && self.trick != TRICK_MONSTERJUMP)
                         {
@@ -1183,6 +1184,7 @@ void() PlayerPostThink =
                                 self.trick = TRICK_MONSTERJUMP;
                                 self.velocity_z = self.velocity_z + (270 * 1.2);
                                 self.flags = self.flags - (self.flags & FL_ONGROUND);
+                                self.jump_vel = '0 0 0';
                         }
 
                         else if (self.busting)
@@ -1190,6 +1192,7 @@ void() PlayerPostThink =
                                 self.trick = TRICK_MONSTERJUMP;
                                 self.velocity_z = self.velocity_z + (270 * 1.2);
                                 self.flags = self.flags - (self.flags & FL_ONGROUND);
+                                self.jump_vel = '0 0 0';
                         }
                 }
                 self.standing_on_monster = FALSE;
