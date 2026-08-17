@@ -59,21 +59,21 @@ void(entity item) remove_kind =
         // finally, we remove the items
         if (    // weapons
                 (itr[0] && (item.classname == "weapon_nailgun" ||
-                        item.classname == "weapon_supernailgun" ||
-                        item.classname == "weapon_supershotgun" ||
-                        item.classname == "weapon_rocketlauncher" ||
-                        item.classname == "weapon_grenadelauncher" ||
-                        item.classname == "weapon_lightning")) ||
+                            item.classname == "weapon_supernailgun" ||
+                            item.classname == "weapon_supershotgun" ||
+                            item.classname == "weapon_rocketlauncher" ||
+                            item.classname == "weapon_grenadelauncher" ||
+                            item.classname == "weapon_lightning")) ||
 
                 // armors
                 (itr[1] && (item.classname == "item_armor1" ||
-                        item.classname == "item_armor2" ||
-                        item.classname == "item_armorInv")) ||
+                            item.classname == "item_armor2" ||
+                            item.classname == "item_armorInv")) ||
 
                 // runes
                 (itr[2] && (item.classname == "item_artifact_invisibility" ||
-                        item.classname == "item_artifact_invulnerability" ||
-                        item.classname == "item_artifact_super_damage")) ||
+                            item.classname == "item_artifact_invulnerability" ||
+                            item.classname == "item_artifact_super_damage")) ||
 
                 // suit
                 (itr[3] && (item.classname == "item_artifact_envirosuit")) ||
@@ -83,11 +83,11 @@ void(entity item) remove_kind =
 
                 // ammo
                 (itr[5] && (item.classname == "item_spikes" ||
-                        item.classname == "item_rockets" ||
-                        item.classname == "item_cells")) ||
+                            item.classname == "item_rockets" ||
+                            item.classname == "item_cells")) ||
 
                 // shells won't be removed if we're using stamina
-                (itr[5] && !sq_stamina && item.classname == "item_shells") 
+                (itr[5] && !sq_stamina && item.classname == "item_shells")
         )
                 remove(item);
 }
