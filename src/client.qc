@@ -78,7 +78,7 @@ void() SetNewParms =
         parm8 = 1;
         parm9 = 0;
 
-        if (sq_stamina) parm4 = 100; // Squirt - start with 100 stamina
+        if (cvar("sq_stamina")) parm4 = 100; // Squirt - start with 100 stamina
 };
 
 void() DecodeLevelParms =
