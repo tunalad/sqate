@@ -77,8 +77,6 @@ void() SetNewParms =
         parm7 = 0;
         parm8 = 1;
         parm9 = 0;
-
-        if (sq_stamina) parm4 = 100; // Squirt - start with 100 stamina
 };
 
 void() DecodeLevelParms =
@@ -89,12 +87,14 @@ void() DecodeLevelParms =
         self.items = parm1;
         self.health = parm2;
         self.armorvalue = parm3;
-        self.ammo_shells = parm4;
+        self.ammo_shells = parm4; // shells get set here, but param4 still gets restarted by above if statement
         self.ammo_nails = parm5;
         self.ammo_rockets = parm6;
         self.ammo_cells = parm7;
         self.weapon = parm8;
         self.armortype = parm9 * 0.01;
+
+        if (cvar("sq_stamina")) self.ammo_shells = 100; // we do the stamina mode check here
 
         // man I do wish there was something like this:
         // findall(world, classname, "item_whateverIWantToFind")
