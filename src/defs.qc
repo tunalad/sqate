@@ -799,3 +799,6 @@ float sq_monsterjump;
 // monster platform for monster tricks
 .float monster_top;
 .float standing_on_monster;
+
+// set from config.mk at compile time
+string sq_version = SQ_VERSION;

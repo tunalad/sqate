@@ -1,10 +1,10 @@
-# sqate
+# SQATE
 
 A highly customizable fork of [Kickflip Quake](https://www.moddb.com/mods/kickflip-quake), based on [Fluffacorn's KFQuake](https://github.com/Fluffacorn/KFQuake).
 
 ## Building
 
-Compiling uses the bundled 64-bit Linux `fteqcc` binary. The resulting `progs.dat` runs in any engine.
+Compiling uses the bundled 64-bit Linux `fteqcc` binary. The resulting `progs.dat` runs in any engine. Build settings live in `config.mk`.
 
 ```
 git clone https://github.com/tunalad/sqate.git
@@ -16,7 +16,8 @@ Other targets:
 
 ```
 make format   # format source with qcstyle --style=quakec
-make package  # build and bundle everything into sqate/
+make package  # build and bundle everything into dist/
+make archive  # package and create sqate-<version>.zip in dist/
 make clean    # remove build artifacts
 ```
 
@@ -100,7 +101,7 @@ Michael 'Squirt' Buettner - wrote the original Kickflip Quake. The source code i
 
 Fluffacorn - maintained the [KFQuake](https://github.com/Fluffacorn/KFQuake) fork this is based on.
 
-Spike - FTEQuake engine and the fteqcc compiler bundled in `tools/`.
+Spike - made fteqcc compiler bundled in `tools/`.
 
 ## License
 

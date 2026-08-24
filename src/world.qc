@@ -198,6 +198,9 @@ void() worldspawn =
         else
                 cvar_set("sv_gravity", "800");
 
+        // expose the mod version for console
+        cvar_set("sq_version", sq_version);
+
         // the area based ambient sounds MUST be the first precache_sounds
 
         // player precaches
@@ -413,5 +416,3 @@ void(entity ent) CopyToBodyQue =
         setsize(bodyque_head, ent.mins, ent.maxs);
         bodyque_head = bodyque_head.owner;
 };
-
-

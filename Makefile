@@ -1,22 +1,27 @@
-MOD_NAME = sqate
+include config.mk
 
 all: build
 
 build:
 	@echo "Building 'progs.dat' file."
-	./tools/fteqcc64 -src src/ -o progs.dat
+	$(FTEQCC) $(FTEQCC_FLAGS) -o progs.dat
 
 format:
-	find src/ -name '*.qc' -exec ./tools/qcstyle --style=quakec -n -s8 {} +
+	find src/ -name '*.qc' -exec $(QCSTYLE) $(QCSTYLE_FLAGS) {} +
 
 package: build
-	@echo "Packaging mod in '$(MOD_NAME)' directory."
-	mkdir -p $(MOD_NAME)
-	cp -r gfx gfx.wad maps progs progs.dat sound CFG\ Files/* demos/* $(MOD_NAME)
+	@echo "Packaging mod into '$(DIST)/'."
+	mkdir -p $(DIST)/$(MOD_NAME)
+	cp -r gfx gfx.wad maps progs progs.dat sound CFG\ Files/* demos/* $(DIST)/$(MOD_NAME)
+	cp README.md $(DIST)
+
+archive: package
+	@echo "Creating 'sqate-$(VERSION).zip'."
+	cd $(DIST) && $(ARCHIVE) sqate-$(VERSION).zip $(MOD_NAME) README.md
 
 clean:
 	@echo "Cleaning up project directory."
 	command rm progs.lno progs.dat
-	command rm -rf $(MOD_NAME)
+	command rm -rf $(DIST)
 
-.PHONY: all build format package clean
+.PHONY: all build format package archive clean
