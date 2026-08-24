@@ -56,7 +56,6 @@ Rebind in `CFG Files/Autoexec.cfg` under `// Skate Binds`. Don't touch the alias
 | Toggle camera | C |
 | Toggle walking | F |
 | Competition start | M |
-| Help | F1 |
 
 ## Cvars
 
