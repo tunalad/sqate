@@ -1,8 +1,8 @@
 ===========================================================================
 Title                   : sq_brick-world
 Filename                : sq_brick-world.bsp
-Release date            : 2025-02-04
-Author                  : tvnalad/tunalad
+Release date            : 2026-02-04
+Author                  : tvnalad / tunalad
 Email Address           : tunalad@proton.me
 Other Files By Author   : ladder.wad
 Misc. Author Info       :
@@ -40,14 +40,12 @@ Editor(s) used          :
                                 https://trenchbroom.github.io/
                           - qthon (wad editor)
                                 https://github.com/tunalad/qthon
-                          - texmex (to convert wad3 textures to wad2)
-                                https://valvedev.info/tools/texmex/
                           - winbspc (to decompile original .bsp to .map)
                                 https://gamebanana.com/tools/5030
                           - bsp texture tools (to extract original map's textures (not included with this map))
                                 https://gamebanana.com/tools/5900
 Known Bugs              : IF NOT YET OBVIOUS, THERE'S AN INTENTIONAL LEAK LEFT IN THE MAP
-May Not Run With        : with engines that have a problem with maps having leaks
+May Not Run With        : with engines that have a problem with maps having leaks xd
 Tested With             : vkquake, fteqw, darkplaces
 
 
